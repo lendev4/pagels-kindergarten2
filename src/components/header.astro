@@ -1,0 +1,179 @@
+---
+const navPages = [
+    { data: { title: 'Testseite' }, slug: 'test' },
+    { data: { title: 'Zweite Testseite' }, slug: 'test2' },
+    { data: { title: 'Dritte Testseite' }, slug: 'test3' },
+    { data: { title: 'Vierte Testseite' }, slug: 'test4' },
+    { data: { title: 'Fünfte Testseite' }, slug: 'test5' },
+]
+
+const allNavItems = [
+    { title: 'Startseite', href: '/' },
+    { title: 'Galerie', href: '/galerie' },
+    ...navPages.map(page => ({ title: page.data.title, href: `/${page.slug}` }))
+];
+---
+
+<header>
+    <nav>
+        <a href="/" class="logo-link">
+            <img src="/uploads/logo.png" alt="Pagels Kindergarten" class="logo" />
+        </a>
+
+        <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="main-nav" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul id="main-nav">
+            {allNavItems.map(item => (
+                <li>
+                    <a href={item.href}>{item.title}</a>
+                </li>
+            ))}
+        </ul>
+    </nav>
+</header>
+
+<script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.getElementById('main-nav');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            const isActive = hamburger.classList.contains('active');
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', String(!isActive));
+        });
+    }
+</script>
+
+<style>
+    header {
+        padding: 1rem 0;
+        background-color: var(--elevated);
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+    }
+
+    nav {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    ul {
+        list-style: none;
+        display: flex;
+        gap: 1.5rem;
+        padding: 0;
+        margin: 0;
+        white-space: nowrap;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
+    }
+
+    ul li a {
+        text-decoration: none;
+        color: var(--secondary);
+        font-size: 1.1rem;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s ease;
+        padding: 0.5rem 0;
+    }
+
+    ul li a:hover {
+        color: var(--primary);
+    }
+
+    ul li a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%; /* Start from center */
+        width: 0;
+        height: 3px;
+        background: var(--accent);
+        border-radius: 4px; /* Soft rounded line */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(-50%);
+        opacity: 0.7;
+    }
+
+    ul li a:hover::after {
+        width: 100%;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 44px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 11px;
+        z-index: 10;
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+
+    .hamburger span {
+        width: 100%;
+        height: 2px;
+        background-color: var(--secondary);
+        border-radius: 2px;
+        /* transition: all 0.2s ease-in-out; */
+        transition: all 0.2s cubic-bezier(0.4, 0.82, 0.15, 1.11);
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .logo {
+        max-height: 75px;
+        width: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+        nav {
+            justify-content: space-between;
+        }
+        ul {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+        ul.active {
+            display: flex;
+        }
+        .hamburger {
+            display: flex;
+        }
+        .logo {
+            max-width: 240px;
+            max-height: 45px;
+            padding-left: 1rem;
+        }
+    }
+</style>

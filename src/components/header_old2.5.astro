@@ -1,0 +1,315 @@
+---
+const navPages = [
+    { data: { title: 'Testseite' }, slug: 'test' },
+    { data: { title: 'Zweite Testseite' }, slug: 'test2' },
+    { data: { title: 'Dritte Testseite' }, slug: 'test3' },
+    { data: { title: 'Vierte Testseite' }, slug: 'test4' },
+    { data: { title: 'Fünfte Testseite' }, slug: 'test5' },
+]
+
+const allNavItems = [
+    { title: 'Startseite', href: '/' },
+    { title: 'Galerie', href: '/galerie' },
+    ...navPages.map(page => ({ title: page.data.title, href: `/${page.slug}` }))
+];
+---
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+<header class="site-header" id="main-header">
+    <div class="header-inner">
+        <a href="/" class="logo-link">
+            <img src="/uploads/logo.png" alt="Pagels Kindergarten" class="logo" width="200" height="60" />
+        </a>
+
+        <button 
+            id="menu-toggle" 
+            class="menu-toggle" 
+            aria-label="Menü öffnen" 
+            aria-expanded="false"
+        >
+            <div class="hamburger-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+
+        <nav class="main-nav" aria-label="Hauptnavigation">
+            <ul class="nav-list">
+                {allNavItems.map((item) => (
+                    <li><a href={item.href}>{item.title}</a></li>
+                ))}
+            </ul>
+        </nav>
+        
+        <div class="overlay" id="overlay"></div>
+    </div>
+</header>
+
+<script>
+    const header = document.getElementById('main-header');
+    const toggleBtn = document.getElementById('menu-toggle');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-list a');
+
+    function toggleMenu(forceClose = false) {
+        const isExpanded = toggleBtn?.getAttribute('aria-expanded') === 'true';
+        const newState = forceClose ? false : !isExpanded;
+
+        toggleBtn?.setAttribute('aria-expanded', String(newState));
+        header?.setAttribute('data-nav-active', String(newState));
+        
+        // Prevent body scroll only on mobile when menu is open
+        if (window.innerWidth <= 1100) {
+            document.body.style.overflow = newState ? 'hidden' : '';
+        }
+    }
+
+    toggleBtn?.addEventListener('click', () => toggleMenu());
+    overlay?.addEventListener('click', () => toggleMenu(true));
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => toggleMenu(true));
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') toggleMenu(true);
+    });
+
+    // Reset state on resize to prevent layout bugs
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1100) {
+            toggleMenu(true);
+            document.body.style.overflow = '';
+        }
+    });
+</script>
+
+<style>
+    :root {
+        /* Waldorf Palette: Earthy, Warm, Natural */
+        --header-bg: #fff9f2; /* Deeper cream, like heavy paper */
+        --header-border: #ebdccb;
+        --text-primary: #5c3a3a; /* Softer brown/red, less harsh than pure black */
+        --text-hover: #9e463a; /* Clay/Terra cotta red */
+        --accent-line: #d4a373; /* Soft wood tone */
+        
+        --font-family: 'Lora', serif; /* Classic, organic typography */
+        --header-height: 85px;
+        --max-width: 1200px;
+        --sidebar-width: 300px;
+    }
+
+    /* Base Layout */
+    .site-header {
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--header-border);
+        height: var(--header-height);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        padding: 0 1.5rem;
+        box-shadow: 0 4px 20px -10px rgba(92, 58, 58, 0.05); /* Very subtle shadow */
+    }
+
+    .header-inner {
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo {
+        height: 55px;
+        width: auto;
+        display: block;
+        /* Slight warmth filter if logo is pure black, optional */
+        /* filter: sepia(0.2); */
+    }
+
+    /* Navigation - Desktop */
+    .main-nav {
+        display: block;
+    }
+
+    .nav-list {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-list a {
+        text-decoration: none;
+        color: var(--text-primary);
+        font-family: var(--font-family);
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.02em;
+        padding: 0.5rem 0;
+        position: relative;
+        white-space: nowrap; /* Fix: Prevents wrapping */
+        transition: color 0.3s ease;
+    }
+
+    /* Soft Waldorf Underline Animation */
+    .nav-list a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%; /* Start from center */
+        width: 0;
+        height: 3px;
+        background: var(--accent-line);
+        border-radius: 4px; /* Soft rounded line */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(-50%);
+        opacity: 0.7;
+    }
+
+    .nav-list a:hover {
+        color: var(--text-hover);
+    }
+
+    .nav-list a:hover::after {
+        width: 100%;
+    }
+
+    .menu-toggle, .overlay {
+        display: none;
+    }
+
+    /* Mobile / Tablet Navigation */
+    /* Increased breakpoint to 1100px to fix overflow issues on tablets */
+    @media screen and (max-width: 1100px) {
+        
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px; /* Larger touch target */
+            height: 44px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1002;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .hamburger-lines {
+            position: relative;
+            width: 26px;
+            height: 18px;
+        }
+
+        .hamburger-lines span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: var(--text-primary);
+            border-radius: 4px; /* Rounded ends */
+            transform-origin: center;
+            transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s;
+        }
+
+        .hamburger-lines span:nth-child(1) { top: 0; }
+        .hamburger-lines span:nth-child(2) { top: 8px; }
+        .hamburger-lines span:nth-child(3) { top: 16px; }
+
+        /* Animation State: X */
+        button[aria-expanded="true"] .hamburger-lines span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            background: var(--text-hover);
+        }
+        button[aria-expanded="true"] .hamburger-lines span:nth-child(2) {
+            opacity: 0;
+        }
+        button[aria-expanded="true"] .hamburger-lines span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+            background: var(--text-hover);
+        }
+
+        .main-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: var(--header-bg);
+            /* Soft shadow */
+            box-shadow: -10px 0 30px rgba(92, 58, 58, 0.1);
+            
+            /* Hidden State */
+            transform: translateX(100%);
+            
+            /* Fix: Only animate transform on mobile to avoid resize bugs */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            
+            z-index: 1001;
+            padding-top: calc(var(--header-height) + 2rem);
+            overflow-y: auto;
+            
+            /* Waldorf touch: Round the top-left corner of the sidebar */
+            border-top-left-radius: 20px;
+            border-left: 1px solid var(--header-border);
+        }
+
+        .nav-list {
+            flex-direction: column;
+            gap: 0;
+            width: 100%;
+            padding: 0 1.5rem;
+        }
+
+        .nav-list li {
+            border-bottom: 1px solid rgba(212, 163, 115, 0.2); /* Very faint separator */
+        }
+
+        .nav-list a {
+            display: block;
+            padding: 1.2rem 0;
+            width: 100%;
+            font-size: 1.15rem;
+            /* Reset desktop underline */
+            &::after { display: none; }
+        }
+
+        .nav-list a:hover {
+            color: var(--text-hover);
+            padding-left: 10px; /* Gentle movement on hover */
+            transition: all 0.2s ease;
+        }
+
+        .overlay {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(60, 40, 40, 0.2); /* Warmer overlay color */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            z-index: 999;
+            backdrop-filter: blur(3px);
+        }
+
+        header[data-nav-active="true"] .main-nav {
+            transform: translateX(0);
+        }
+
+        header[data-nav-active="true"] .overlay {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+</style>

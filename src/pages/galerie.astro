@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content"
+import Layout from "../layouts/Layout.astro"
+
+const albums = await getCollection("gallery")
+---
+
+<Layout title="Galerie">
+    <main>
+        <h1>Galerie</h1>
+        {albums.map((album) => (
+            <section class="album">
+                <h2>{album.data.title}</h2>
+
+                {album.data.description && <p class="description" >{album.data.description}</p>}
+
+                <div>
+                    {album.data.images.map((image) => (
+                        <img src={image} alt={album.data.title} loading="lazy" />
+                    ))}
+                </div>
+            </section>
+        ))}
+    </main>
+</Layout>

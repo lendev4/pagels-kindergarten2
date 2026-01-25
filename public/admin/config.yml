@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+#backend:
+#  name: github
+#  repo: user/repo
+backend:
+  name: test-repo
+
+media_folder: /public/uploads
+public_folder: /uploads
+
+collections:
+  - name: "homepage"
+    label: "Homepage"
+    files: 
+      - label: "Startseite bearbeiten"
+        name: "homepage"
+        file: "src/content/homepage/homepage.md"
+        fields:
+          - { label: Überschrift, name: headline, widget: string }
+          - { label: Einleitung, name: intro, widget: text }
+          - { label: Titelbild, name: cover_image, widget: image, required: false }
+
+  - name: "gallery"
+    label: "Galerie"
+    folder: src/content/gallery
+    create: true
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - { label: Beschreibung, name: description, widget: text, required: false }
+      - { label: Bilder, name: images, widget: list, allow_add: true, required: false, field: { label: Bild, name: image, widget: image } }
+        
+  - name: "pages"
+    label: "Seiten"
+    folder: src/content/pages
+    create: true
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - { label: Inhalt, name: body, widget: markdown }

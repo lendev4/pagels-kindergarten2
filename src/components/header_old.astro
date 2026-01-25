@@ -1,0 +1,124 @@
+---
+const navPages = [
+    { data: { title: 'Testseite' }, slug: 'test' },
+    { data: { title: 'Zweite Testseite' }, slug: 'test2' },
+]
+---
+
+<header class="site-header">
+    <div class="container header-inner">
+        <ul>
+            <li>
+                <a href="/">
+                    <img src="/uploads/logo.png" alt="Pagels Kindergarten" class="logo" />
+                </a>
+            </li>
+        </ul>
+        <nav aria-label="Hauptnavigation" class="nav">
+            <details class="nav-toggle">
+                <summary>Menü</summary>
+                <ul class="nav-list">
+                    <li><a href="/">Startseite</a></li>
+                    <li><a href="/galerie">Galerie</a></li>
+                    {navPages.map((page) => (
+                        <li><a href={`/${page.slug}`}>{page.data.title}</a></li>
+                    ))}
+                </ul>
+            </details>
+            <ul class="nav-list nav-desktop">
+                <li>
+                    <a href="/">
+            		    <img src="/uploads/logo.png" alt="Pagels Kindergarten" class="logo" />
+                    </a>
+                </li>
+                <li><a href="/galerie">Galerie</a></li>
+                {navPages.map((page) => (
+                    <li><a href={`/${page.slug}`}>{page.data.title}</a></li>
+                ))}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<style>
+    .site-header {
+		background: #fff4e6;
+		border-bottom: 1px solid #f0e2d0;
+	}
+    .container {
+        max-width: 1100px;
+		margin: 0 auto;
+		padding: 1.5rem;
+	}
+    .header-inner {
+        display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+    .logo {
+        max-width: 300px;
+        height: auto;
+    }
+    .nav-list {
+		list-style: none;
+		display: flex;
+		gap: 0.75rem 1rem;
+		margin: 0;
+		padding: 0;
+		flex-wrap: wrap;
+	}
+
+	.nav-list a {
+		text-decoration: none;
+		padding: 0.4rem 0.8rem;
+		border-radius: 999px;
+		color: #7a2e2e;
+		background: #ffd9b3;
+		font-weight: 600;
+	}
+
+	.nav-list a:hover {
+		background: #ffc68f;
+	}
+
+	.nav-toggle {
+		display: none;
+	}
+
+	.nav-toggle summary {
+		list-style: none;
+		cursor: pointer;
+		padding: 0.4rem 0.8rem;
+		border-radius: 999px;
+		background: #ffd9b3;
+		color: #7a2e2e;
+		font-weight: 700;
+	}
+
+	.nav-toggle summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.nav-desktop {
+		display: flex;
+	}
+
+	@media (max-width: 640px) {
+		.header-inner {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		.nav-desktop {
+			display: none;
+		}
+		.nav-toggle {
+			display: block;
+		}
+		.nav-toggle .nav-list {
+			margin-top: 0.75rem;
+			flex-direction: column;
+		}
+	}
+</style>
