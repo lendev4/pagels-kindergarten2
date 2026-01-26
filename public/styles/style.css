@@ -25,7 +25,9 @@
 :root {
   --bg: #ffffff;
   --elevated: #fff4e6;
-  --fg: #000000;
+  /* --elevated: #fff4e6cc; */
+  /* --fg: #533428; */
+  --fg: #281f1b;
   --secondary: #7a2e2e;
   --primary: #9e463a;
   --accent: #d4a373;
@@ -39,4 +41,55 @@ body {
   height: 100%;
   overflow: auto;
   font-family: 'InterVariable', sans-serif;
+  color: var(--fg);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* body.bg-image { */
+  /* background-image: url("https://waldorfkindergarten-giessen.de/typo3conf/ext/waldorfkindergarten_giessen/Resources/Public/Images/page.jpg"); */
+  /* background-size: cover;
+  background-attachment: fixed;
+  background-position: center; */
+
+  /* & main {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  } */
+/* } */
+
+main {
+  padding: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* min-width: 320px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; */
+}
+
+main img {
+  max-width: 100%;
+  max-height: 400px;
+  display: block;
+  border-radius: 8px;
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
+main a {
+  color: var(--secondary);
+  font-weight: 500;
 }

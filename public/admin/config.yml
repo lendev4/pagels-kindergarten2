@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 
-#backend:
-#  name: github
-#  repo: user/repo
 backend:
-  name: test-repo
+  name: github
+  repo: lendev4/pagels-kindergarten2
+#backend:
+#  name: test-repo
 
 media_folder: /public/uploads
 public_folder: /uploads
@@ -17,9 +17,11 @@ collections:
         name: "homepage"
         file: "src/content/homepage/homepage.md"
         fields:
-          - { label: Überschrift, name: headline, widget: string }
-          - { label: Einleitung, name: intro, widget: text }
-          - { label: Titelbild, name: cover_image, widget: image, required: false }
+        - { label: Überschrift, name: headline, widget: string }
+        #  - { label: Einleitung, name: intro, widget: text }
+        #  - { label: Titelbild, name: cover_image, widget: image, required: false }
+        #- { label: Titel, name: title, widget: string }
+        - { label: Inhalt, name: body, widget: markdown }
 
   - name: "gallery"
     label: "Galerie"
@@ -35,5 +37,16 @@ collections:
     folder: src/content/pages
     create: true
     fields:
+      - { label: "In Navigationsleiste anzeigen", name: nav, widget: boolean, default: false, required: false }
+      - { label: "Navigationslabel", name: nav_label, widget: string, required: false, hint: "Verwende Titel, falls leer" }
       - { label: Titel, name: title, widget: string }
       - { label: Inhalt, name: body, widget: markdown }
+
+  - name: "legal"
+    label: "Rechtliches"
+    folder: src/content/legal
+    create: true
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - { label: Inhalt, name: body, widget: markdown }
+    

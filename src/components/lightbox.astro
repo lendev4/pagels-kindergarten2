@@ -1,0 +1,922 @@
+<div id="lightbox" hidden inert role="dialog" aria-modal="true" aria-label="Bildvorschau">
+    <div class="lightbox-loader" aria-hidden="true">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="4"></circle>
+        </svg>
+    </div>
+    <button class="lightbox-close" type="button" aria-label="Schließen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="lightbox-content">
+        <img alt="" class="lightbox-image">
+        <div class="lightbox-controls">
+            <button class="lightbox-nav lightbox-prev" type="button" aria-label="Vorheriges Bild" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button class="lightbox-nav lightbox-next" type="button" aria-label="Nächstes Bild" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===================
+    // DOM ELEMENTS
+    // ===================
+    const lightbox = document.getElementById('lightbox')!;
+    const lightboxImage = lightbox.querySelector<HTMLImageElement>('.lightbox-image')!;
+    const closeButton = lightbox.querySelector<HTMLButtonElement>('.lightbox-close')!;
+    const prevButton = lightbox.querySelector<HTMLButtonElement>('.lightbox-prev')!;
+    const nextButton = lightbox.querySelector<HTMLButtonElement>('.lightbox-next')!;
+    const allButtons = [closeButton, prevButton, nextButton];
+
+    // ===================
+    // CONFIGURATION
+    // ===================
+    const CONFIG = {
+        friction: 0.9,
+        bounceStiffness: 0.3,
+        zoomMax: 4,
+        velocityMultiplier: 25,
+        dismissThreshold: 180,      // Image position (2x finger = 90px finger movement)
+        dismissVelocity: 5,
+        swipeThresholdRatio: 0.25,  // 1/4 of screen width
+        swipeVelocity: 1.5,
+        doubleTapWindow: 300,
+        dismissMultiplier: 1.5,     // Image moves 1.5x faster than finger
+        navAnimationDuration: 150,  // ms for slide animation (fast & snappy)
+    };
+
+    // ===================
+    // STATE
+    // ===================
+    const state = {
+        x: 0,
+        y: 0,
+        scale: 1,
+        isDragging: false,
+        isPinching: false,
+        active: false
+    };
+
+    let galleryImages: HTMLImageElement[] = [];
+    let currentIndex = 0;
+    let previouslyFocusedElement: HTMLElement | null = null;
+
+    // Interaction tracking
+    let startX = 0, startY = 0;
+    let lastX = 0, lastY = 0;
+    let startScale = 1, startDist = 0;
+    let pinchCenter = { x: 0, y: 0 };
+    let vx = 0, vy = 0;
+    let lastTime = 0;
+    let rafId: number | null = null;
+    let swipeDirection: 'h' | 'v' | null = null;
+    let lastTapTime = 0;
+    let hasMoved = false;
+
+    // ===================
+    // UTILITY FUNCTIONS
+    // ===================
+    const getBounds = (scale: number) => {
+        if (scale <= 1) return { minX: 0, maxX: 0, minY: 0, maxY: 0 };
+        
+        const winW = window.innerWidth;
+        const winH = window.innerHeight;
+        const imgW = lightboxImage.offsetWidth * scale;
+        const imgH = lightboxImage.offsetHeight * scale;
+        const rangeX = imgW > winW ? (imgW - winW) / 2 : 0;
+        const rangeY = imgH > winH ? (imgH - winH) / 2 : 0;
+
+        return { minX: -rangeX, maxX: rangeX, minY: -rangeY, maxY: rangeY };
+    };
+
+    const getDistance = (touches: TouchList) => 
+        Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
+
+    const getCenter = (touches: TouchList) => ({
+        x: (touches[0].clientX + touches[1].clientX) / 2,
+        y: (touches[0].clientY + touches[1].clientY) / 2
+    });
+
+    const getAdjacentImages = (img: HTMLImageElement): HTMLImageElement[] => {
+        const container = img.closest('.gallery, .images, [class*="gallery"], [class*="grid"], main');
+        if (!container) return [img];
+        
+        const allImages = Array.from(container.querySelectorAll('img')) as HTMLImageElement[];
+        const galleryImgs = allImages.filter(i => {
+            const rect = i.getBoundingClientRect();
+            return rect.width > 100 && rect.height > 100;
+        });
+        
+        return galleryImgs.length > 0 ? galleryImgs : [img];
+    };
+
+    // ===================
+    // STYLE HELPERS
+    // ===================
+    const setButtonsOpacity = (opacity: string) => {
+        allButtons.forEach(btn => { btn.style.opacity = opacity; });
+    };
+
+    const resetButtonStyles = () => {
+        allButtons.forEach(btn => {
+            btn.style.transition = '';
+            btn.style.opacity = '';
+        });
+    };
+
+    const resetAllStyles = () => {
+        lightboxImage.style.transition = '';
+        lightboxImage.style.opacity = '';
+        lightboxImage.style.transform = '';
+        lightbox.style.transition = '';
+        lightbox.style.background = '';
+        lightbox.style.visibility = '';
+        resetButtonStyles();
+    };
+
+    // ===================
+    // RENDER
+    // ===================
+    const render = (instant = false) => {
+        const isZoomed = state.scale > 1.01;
+        
+        lightbox.classList.toggle('zoomed-mode', isZoomed);
+        lightboxImage.classList.toggle('zoomed', isZoomed);
+        
+        lightboxImage.style.transition = (state.isDragging || state.isPinching || instant) 
+            ? 'none' 
+            : 'transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)';
+        
+        lightboxImage.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+    };
+
+    // ===================
+    // PHYSICS
+    // ===================
+    const updatePhysics = () => {
+        if (!state.active) { rafId = null; return; }
+        if (state.isDragging || state.isPinching) {
+            rafId = requestAnimationFrame(updatePhysics);
+            return;
+        }
+
+        let changed = false;
+        
+        // Scale snap-back
+        if (state.scale < 1) {
+            state.scale += (1 - state.scale) * CONFIG.bounceStiffness;
+            if (state.scale > 0.99) state.scale = 1;
+            changed = true;
+        }
+
+        const { minX, maxX, minY, maxY } = getBounds(state.scale);
+
+        // Momentum (only when zoomed)
+        if (state.scale > 1 && (Math.abs(vx) > 0.1 || Math.abs(vy) > 0.1)) {
+            state.x += vx;
+            state.y += vy;
+            vx *= CONFIG.friction;
+            vy *= CONFIG.friction;
+            changed = true;
+        } else {
+            vx = 0;
+            vy = 0;
+        }
+
+        // Bounds enforcement
+        const applyBound = (val: number, min: number, max: number): [number, boolean] => {
+            if (val > max) {
+                const newVal = val + (max - val) * CONFIG.bounceStiffness;
+                return [Math.abs(newVal - max) < 0.5 ? max : newVal, true];
+            }
+            if (val < min) {
+                const newVal = val + (min - val) * CONFIG.bounceStiffness;
+                return [Math.abs(newVal - min) < 0.5 ? min : newVal, true];
+            }
+            return [val, false];
+        };
+
+        let changedX, changedY;
+        [state.x, changedX] = applyBound(state.x, minX, maxX);
+        [state.y, changedY] = applyBound(state.y, minY, maxY);
+        changed = changed || changedX || changedY;
+
+        // Center when at scale 1
+        if (state.scale === 1 && (state.x !== 0 || state.y !== 0)) {
+            state.x += (0 - state.x) * CONFIG.bounceStiffness;
+            state.y += (0 - state.y) * CONFIG.bounceStiffness;
+            if (Math.abs(state.x) < 0.5) state.x = 0;
+            if (Math.abs(state.y) < 0.5) state.y = 0;
+            changed = true;
+        }
+
+        if (changed) {
+            render(true);
+            rafId = requestAnimationFrame(updatePhysics);
+        } else {
+            rafId = null;
+        }
+    };
+
+    const startPhysicsLoop = () => {
+        if (!rafId) rafId = requestAnimationFrame(updatePhysics);
+    };
+
+    const stopPhysicsLoop = () => {
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+    };
+
+    // ===================
+    // STATE MANAGEMENT
+    // ===================
+    const resetState = () => {
+        state.x = 0;
+        state.y = 0;
+        state.scale = 1;
+        state.isDragging = false;
+        state.isPinching = false;
+        vx = 0;
+        vy = 0;
+        swipeDirection = null;
+        lightbox.style.background = '';
+        render();
+    };
+
+    // ===================
+    // NAVIGATION
+    // ===================
+    const updateNavigation = () => {
+        const hasMultiple = galleryImages.length > 1;
+        const hasPrev = currentIndex > 0;
+        const hasNext = currentIndex < galleryImages.length - 1;
+        
+        prevButton.hidden = !hasMultiple;
+        nextButton.hidden = !hasMultiple;
+        prevButton.disabled = !hasPrev;
+        nextButton.disabled = !hasNext;
+    };
+
+    const showImage = (img: HTMLImageElement) => {
+        lightboxImage.src = '';
+        resetState();
+        lightbox.classList.add('loading');
+        
+        lightboxImage.onload = () => lightbox.classList.remove('loading');
+        lightboxImage.onerror = () => lightbox.classList.remove('loading');
+        
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt || '';
+        updateNavigation();
+    };
+
+    // Simple navigation for buttons/keyboard (just crossfade)
+    const showPrev = () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            showImage(galleryImages[currentIndex]);
+        }
+    };
+
+    const showNext = () => {
+        if (currentIndex < galleryImages.length - 1) {
+            currentIndex++;
+            showImage(galleryImages[currentIndex]);
+        }
+    };
+
+    // Swipe navigation - continues finger momentum and slides
+    const swipeNavigate = (direction: 'prev' | 'next') => {
+        const isPrev = direction === 'prev';
+        
+        // Update index
+        currentIndex += isPrev ? -1 : 1;
+        const newImg = galleryImages[currentIndex];
+        
+        const winW = window.innerWidth;
+        const currentX = state.x;  // Where finger left it
+        const slideOut = isPrev ? winW : -winW;
+        const slideIn = isPrev ? -winW * 0.4 : winW * 0.4;
+        const duration = CONFIG.navAnimationDuration;
+        
+        // Pre-load new image
+        const tempImg = new Image();
+        tempImg.src = newImg.src;
+        
+        // Continue current image sliding off from where finger left it
+        lightboxImage.style.transition = `transform ${duration}ms cubic-bezier(0.2, 0, 0, 1), opacity ${duration * 0.7}ms ease-out`;
+        lightboxImage.style.transform = `translate3d(${slideOut}px, 0, 0) scale(1)`;
+        lightboxImage.style.opacity = '0';
+        
+        setTimeout(() => {
+            // Position new image off-screen
+            lightboxImage.style.transition = 'none';
+            lightboxImage.style.transform = `translate3d(${slideIn}px, 0, 0) scale(1)`;
+            lightboxImage.style.opacity = '0';
+            
+            // Swap image
+            lightboxImage.src = newImg.src;
+            lightboxImage.alt = newImg.alt || '';
+            updateNavigation();
+            
+            // Force reflow
+            void lightboxImage.offsetWidth;
+            
+            // Slide in
+            lightboxImage.style.transition = `transform ${duration}ms cubic-bezier(0.2, 0, 0, 1), opacity ${duration * 0.5}ms ease-in`;
+            lightboxImage.style.transform = 'translate3d(0, 0, 0) scale(1)';
+            lightboxImage.style.opacity = '1';
+            
+            setTimeout(() => {
+                resetState();
+                lightboxImage.style.transition = '';
+                lightboxImage.style.opacity = '';
+                render();
+            }, duration);
+            
+        }, duration * 0.35);
+    };
+
+    // ===================
+    // OPEN / CLOSE
+    // ===================
+    const openLightbox = (img: HTMLImageElement) => {
+        previouslyFocusedElement = document.activeElement as HTMLElement;
+        
+        galleryImages = getAdjacentImages(img);
+        currentIndex = galleryImages.indexOf(img);
+        
+        showImage(img);
+        
+        lightbox.removeAttribute('hidden');
+        lightbox.removeAttribute('inert');
+        lightbox.classList.add('active');
+        state.active = true;
+        document.body.style.overflow = 'hidden';
+        
+        history.pushState({ lightbox: 'open' }, '');
+        closeButton.focus();
+    };
+
+    const closeLightboxVisual = () => {
+        state.active = false;
+        state.isDragging = false;
+        state.isPinching = false;
+        vx = 0;
+        vy = 0;
+        
+        // Hide immediately to avoid flash
+        lightbox.style.visibility = 'hidden';
+        lightbox.classList.remove('active');
+        
+        // Clean up after a short delay
+        setTimeout(() => {
+            state.x = 0;
+            state.y = 0;
+            state.scale = 1;
+            
+            lightboxImage.onload = null;
+            lightboxImage.onerror = null;
+            lightboxImage.src = '';
+            lightboxImage.alt = '';
+            
+            resetAllStyles();
+            
+            lightbox.setAttribute('hidden', '');
+            lightbox.setAttribute('inert', '');
+            galleryImages = [];
+            currentIndex = 0;
+            
+            previouslyFocusedElement?.focus();
+            previouslyFocusedElement = null;
+        }, 50);
+        
+        document.body.style.overflow = '';
+    };
+
+    const closeLightbox = () => {
+        if (!state.active) return;
+        history.back();
+    };
+
+    // ===================
+    // DISMISS ANIMATION
+    // ===================
+    const dismissWithAnimation = () => {
+        stopPhysicsLoop();
+        
+        // Animate image flying off
+        lightboxImage.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
+        lightboxImage.style.transform = `translate(0px, ${window.innerHeight + 100}px) scale(1)`;
+        lightboxImage.style.opacity = '0';
+        
+        lightbox.style.transition = 'background 0.2s ease-out';
+        lightbox.style.background = 'rgba(0, 0, 0, 0)';
+        
+        // Fade out buttons
+        allButtons.forEach(btn => {
+            btn.style.transition = 'opacity 0.15s ease-out';
+            btn.style.opacity = '0';
+        });
+        
+        setTimeout(() => history.back(), 220);
+    };
+
+    const cancelDismiss = () => {
+        vx = 0;
+        vy = 0;
+        lightbox.style.background = '';
+        setButtonsOpacity('');
+        startPhysicsLoop();
+    };
+
+    // ===================
+    // VELOCITY TRACKING
+    // ===================
+    const trackVelocity = (currX: number, currY: number) => {
+        const now = Date.now();
+        const dt = now - lastTime;
+        if (dt > 0) {
+            const newVx = (currX - lastX) / dt * CONFIG.velocityMultiplier;
+            const newVy = (currY - lastY) / dt * CONFIG.velocityMultiplier;
+            vx = vx * 0.5 + newVx * 0.5;
+            vy = vy * 0.5 + newVy * 0.5;
+        }
+        lastX = currX;
+        lastY = currY;
+        lastTime = now;
+    };
+
+    // ===================
+    // EVENT HANDLERS
+    // ===================
+    
+    // Back button
+    window.addEventListener('popstate', () => {
+        if (state.active) closeLightboxVisual();
+    });
+
+    // Click handlers
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+    closeButton.addEventListener('click', closeLightbox);
+    prevButton.addEventListener('click', showPrev);
+    nextButton.addEventListener('click', showNext);
+
+    // Gallery trigger
+    document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.tagName === 'IMG' && target.closest('main')) {
+            openLightbox(target as HTMLImageElement);
+        }
+    });
+
+    // Mouse events
+    lightboxImage.addEventListener('mousedown', (e) => {
+        if (state.scale > 1) {
+            e.preventDefault();
+            state.isDragging = true;
+            startX = e.clientX - state.x;
+            startY = e.clientY - state.y;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            lastTime = Date.now();
+            lightboxImage.classList.add('grabbing');
+            startPhysicsLoop();
+        }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (state.isDragging) {
+            e.preventDefault();
+            state.x = e.clientX - startX;
+            state.y = e.clientY - startY;
+            trackVelocity(e.clientX, e.clientY);
+            render(true);
+        }
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (state.isDragging) {
+            state.isDragging = false;
+            lightboxImage.classList.remove('grabbing');
+            startPhysicsLoop();
+        }
+    });
+
+    // Touch events
+    lightboxImage.addEventListener('touchstart', (e) => {
+        vx = 0; vy = 0;
+        swipeDirection = null;
+        hasMoved = false;
+        
+        if (e.touches.length === 1) {
+            state.isPinching = false;
+            startX = e.touches[0].clientX - state.x;
+            startY = e.touches[0].clientY - state.y;
+            lastX = e.touches[0].clientX;
+            lastY = e.touches[0].clientY;
+            lastTime = Date.now();
+            
+            if (state.scale > 1) {
+                state.isDragging = true;
+                lightboxImage.classList.add('grabbing');
+            }
+        } else if (e.touches.length === 2) {
+            e.preventDefault();
+            state.isDragging = false;
+            state.isPinching = true;
+            startDist = getDistance(e.touches);
+            startScale = state.scale;
+            pinchCenter = getCenter(e.touches);
+        }
+        startPhysicsLoop();
+    }, { passive: false });
+
+    lightboxImage.addEventListener('touchmove', (e) => {
+        // Swipe activation (scale 1 only)
+        if (!state.isDragging && !state.isPinching && state.scale === 1 && e.touches.length === 1) {
+            const dx = e.touches[0].clientX - lastX;
+            const dy = e.touches[0].clientY - lastY;
+            
+            if (Math.hypot(dx, dy) > 10) {
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    swipeDirection = 'h';
+                } else if (e.touches[0].clientY - startY > 0) {
+                    swipeDirection = 'v';
+                }
+
+                if (swipeDirection) {
+                    state.isDragging = true;
+                    lightboxImage.classList.add('grabbing');
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                }
+            }
+        }
+
+        // Dragging
+        if (state.isDragging && e.touches.length === 1) {
+            e.preventDefault();
+            hasMoved = true;
+            const currX = e.touches[0].clientX;
+            const currY = e.touches[0].clientY;
+
+            if (state.scale === 1) {
+                if (swipeDirection === 'h') {
+                    let x = currX - startX;
+                    const hasPrev = currentIndex > 0;
+                    const hasNext = currentIndex < galleryImages.length - 1;
+                    if (x > 0 && !hasPrev) x = 0;
+                    else if (x < 0 && !hasNext) x = 0;
+                    state.x = x;
+                    state.y = 0;
+                } else if (swipeDirection === 'v') {
+                    const rawY = currY - startY;
+                    if (rawY > 0) {
+                        state.y = rawY * CONFIG.dismissMultiplier;
+                        const progress = Math.min(rawY / 100, 1);
+                        lightbox.style.background = `rgba(0, 0, 0, ${0.95 * (1 - progress)})`;
+                        setButtonsOpacity(String(1 - progress));
+                    } else {
+                        state.y = rawY * 0.1;
+                    }
+                    state.x = 0;
+                }
+            } else {
+                // Zoomed pan with rubber-banding
+                const x = currX - startX;
+                const y = currY - startY;
+                const { minX, maxX, minY, maxY } = getBounds(state.scale);
+
+                state.x = x > maxX ? maxX + (x - maxX) * 0.3 :
+                          x < minX ? minX + (x - minX) * 0.3 : x;
+                state.y = y > maxY ? maxY + (y - maxY) * 0.3 :
+                          y < minY ? minY + (y - minY) * 0.3 : y;
+            }
+
+            trackVelocity(currX, currY);
+            render(true);
+
+        } else if (state.isPinching && e.touches.length === 2) {
+            e.preventDefault();
+            const newDist = getDistance(e.touches);
+            const newCenter = getCenter(e.touches);
+            
+            const scale = startScale * (newDist / startDist);
+            const newScale = Math.min(Math.max(0.5, scale), CONFIG.zoomMax);
+            
+            const winCX = window.innerWidth / 2;
+            const winCY = window.innerHeight / 2;
+            const pointX = (pinchCenter.x - winCX - state.x) / state.scale;
+            const pointY = (pinchCenter.y - winCY - state.y) / state.scale;
+            
+            state.scale = newScale;
+            state.x = (newCenter.x - winCX) - (pointX * state.scale);
+            state.y = (newCenter.y - winCY) - (pointY * state.scale);
+            
+            pinchCenter = newCenter;
+            render(true);
+        }
+    }, { passive: false });
+
+    lightboxImage.addEventListener('touchend', (e) => {
+        // Pinch end
+        if (state.isPinching && e.touches.length < 2) {
+            state.isPinching = false;
+            vx = 0;
+            vy = 0;
+            
+            if (e.touches.length === 1) {
+                state.isDragging = true;
+                startX = e.touches[0].clientX - state.x;
+                startY = e.touches[0].clientY - state.y;
+                lastX = e.touches[0].clientX;
+                lastY = e.touches[0].clientY;
+            }
+            
+            startPhysicsLoop();
+            return;
+        }
+
+        // Drag end
+        if (state.isDragging && e.touches.length === 0) {
+            state.isDragging = false;
+            lightboxImage.classList.remove('grabbing');
+            
+            if (hasMoved) {
+                if (swipeDirection === 'h') {
+                    const threshold = window.innerWidth * CONFIG.swipeThresholdRatio;
+                    const hasPrev = currentIndex > 0;
+                    const hasNext = currentIndex < galleryImages.length - 1;
+
+                    if ((state.x < -threshold || vx < -CONFIG.swipeVelocity) && hasNext) {
+                        swipeNavigate('next');
+                        swipeDirection = null;
+                        return;
+                    } else if ((state.x > threshold || vx > CONFIG.swipeVelocity) && hasPrev) {
+                        swipeNavigate('prev');
+                        swipeDirection = null;
+                        return;
+                    } else {
+                        vx = 0;
+                        vy = 0;
+                    }
+                } else if (swipeDirection === 'v') {
+                    if (state.y > CONFIG.dismissThreshold || vy > CONFIG.dismissVelocity) {
+                        swipeDirection = null;
+                        dismissWithAnimation();
+                        return;
+                    } else {
+                        cancelDismiss();
+                    }
+                }
+                
+                swipeDirection = null;
+                startPhysicsLoop();
+                return;
+            }
+        }
+
+        // Double tap detection
+        if (hasMoved || state.isPinching) return;
+        if (e.changedTouches.length !== 1) return;
+
+        const now = Date.now();
+        const timeDiff = now - lastTapTime;
+        
+        if (timeDiff < CONFIG.doubleTapWindow && timeDiff > 0) {
+            e.preventDefault();
+            if (state.scale === 1) {
+                const touch = e.changedTouches[0];
+                const winCX = window.innerWidth / 2;
+                const winCY = window.innerHeight / 2;
+                const targetScale = 2.5;
+                
+                state.x = -(touch.clientX - winCX) * (targetScale - 1);
+                state.y = -(touch.clientY - winCY) * (targetScale - 1);
+                state.scale = targetScale;
+            } else {
+                resetState();
+            }
+            render();
+            lastTapTime = 0;
+        } else {
+            lastTapTime = now;
+        }
+    });
+
+    // Mouse wheel zoom
+    lightbox.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        
+        const delta = e.deltaY * -0.005;
+        let newScale = Math.min(Math.max(1, state.scale + delta), CONFIG.zoomMax);
+        
+        if (newScale !== state.scale) {
+            const winCX = window.innerWidth / 2;
+            const winCY = window.innerHeight / 2;
+            const mouseX = e.clientX - winCX;
+            const mouseY = e.clientY - winCY;
+            
+            const pointX = (mouseX - state.x) / state.scale;
+            const pointY = (mouseY - state.y) / state.scale;
+            
+            state.scale = newScale;
+            state.x = mouseX - (pointX * state.scale);
+            state.y = mouseY - (pointY * state.scale);
+            
+            render(true);
+            startPhysicsLoop();
+        }
+    }, { passive: false });
+
+    // Keyboard
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        
+        switch (e.key) {
+            case 'Escape': closeLightbox(); break;
+            case 'ArrowLeft': showPrev(); break;
+            case 'ArrowRight': showNext(); break;
+            case 'Tab':
+                e.preventDefault();
+                const visible = allButtons.filter(btn => 
+                    !btn.hidden && !btn.disabled && btn.offsetParent !== null
+                );
+                if (visible.length === 0) return;
+                
+                const idx = visible.indexOf(document.activeElement as HTMLButtonElement);
+                const nextIdx = e.shiftKey 
+                    ? (idx <= 0 ? visible.length - 1 : idx - 1)
+                    : (idx >= visible.length - 1 ? 0 : idx + 1);
+                visible[nextIdx]?.focus();
+                break;
+        }
+    });
+</script>
+
+<style>
+    #lightbox {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        padding: 0;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+        overflow: hidden;
+    }
+    
+    #lightbox.active {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    .lightbox-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        z-index: 5;
+    }
+    
+    #lightbox.loading .lightbox-loader { opacity: 1; }
+    #lightbox.loading .lightbox-image { opacity: 0; }
+    
+    .spinner {
+        width: 40px;
+        height: 40px;
+        color: rgba(255, 255, 255, 0.8);
+        animation: spin 1s linear infinite;
+    }
+    
+    .spinner circle {
+        stroke-dasharray: 80;
+        stroke-dashoffset: 60;
+        stroke-linecap: round;
+    }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    #lightbox.zoomed-mode .lightbox-controls,
+    #lightbox.zoomed-mode .lightbox-close {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .lightbox-content { display: contents; }
+    
+    .lightbox-image {
+        max-width: 100vw;
+        max-height: 100vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 0;
+        box-shadow: none;
+        transition: transform 0.15s ease, opacity 0.2s ease;
+        user-select: none;
+        touch-action: none;
+        opacity: 1;
+    }
+    
+    .lightbox-image.zoomed { cursor: grab; }
+    .lightbox-image.grabbing { cursor: grabbing; transition: none; }
+    
+    .lightbox-controls {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1.5rem;
+        z-index: 20;
+        transition: opacity 0.3s ease;
+    }
+    
+    .lightbox-controls:not(:has(button:not([hidden]))) { display: none; }
+    
+    .lightbox-close {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        transition: all 0.3s ease;
+        z-index: 30;
+    }
+    
+    .lightbox-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .lightbox-close svg, .lightbox-nav svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        pointer-events: none;
+        stroke-width: 2.5;
+    }
+    
+    .lightbox-nav:disabled { opacity: 0.3; cursor: default; transform: none; }
+    .lightbox-nav[hidden] { display: none; }
+    
+    .lightbox-close:focus-visible,
+    .lightbox-nav:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.8);
+        outline-offset: 2px;
+    }
+
+    @media (hover: hover) {
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+        .lightbox-nav:hover:not(:disabled) { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+        .lightbox-controls, .lightbox-close { opacity: 0; }
+        #lightbox:not(.zoomed-mode):hover .lightbox-controls,
+        #lightbox:not(.zoomed-mode):hover .lightbox-close { opacity: 1; }
+    }
+
+    @media (pointer: coarse) {
+        .lightbox-image { cursor: default; }
+        .lightbox-image.zoomed { cursor: default; }
+        .lightbox-close { top: 1.25rem; right: 1.25rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #lightbox, .lightbox-image, .lightbox-nav, .lightbox-close { transition: none; }
+    }
+</style>

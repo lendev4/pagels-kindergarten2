@@ -1,16 +1,11 @@
 ---
-const navPages = [
-    { data: { title: 'Testseite' }, slug: 'test' },
-    { data: { title: 'Zweite Testseite' }, slug: 'test2' },
-    { data: { title: 'Dritte Testseite' }, slug: 'test3' },
-    { data: { title: 'Vierte Testseite' }, slug: 'test4' },
-    { data: { title: 'Fünfte Testseite' }, slug: 'test5' },
-]
+import { getCollection } from "astro:content";
+const navPages = await getCollection("pages");
 
 const allNavItems = [
     { title: 'Startseite', href: '/' },
     { title: 'Galerie', href: '/galerie' },
-    ...navPages.map(page => ({ title: page.data.title, href: `/${page.slug}` }))
+    ...navPages.filter(page => page.data.nav == true).map(page => ({ title: page.data.nav_label || page.data.title, href: `/${page.slug}` }))
 ];
 ---
 
@@ -77,8 +72,8 @@ const allNavItems = [
         width: 100%;
         flex-wrap: wrap;
         justify-content: center;
-        border-top: 1px solid var(--border);
-        padding-top: 1rem;
+        /* border-top: 1px solid var(--border); */
+        /* padding-top: 1rem; */
     }
 
     ul li a {
@@ -163,6 +158,8 @@ const allNavItems = [
             flex-direction: column;
             gap: 1rem;
             width: 100%;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
         }
         ul.active {
             display: flex;

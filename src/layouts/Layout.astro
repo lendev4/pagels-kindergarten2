@@ -1,9 +1,7 @@
 ---
 import Header from "../components/header.astro";
-import HeaderOld from "../components/header_old.astro";
-import HeaderOld2 from "../components/header_old2.astro";
-import HeaderOld25 from "../components/header_old2.5.astro";
-import HeaderOld3 from "../components/header_old3.astro";
+import Footer from "../components/footer.astro";
+import Lightbox from "../components/lightbox.astro";
 
 const { title = 'Pagels Kindergarten' } = Astro.props;
 ---
@@ -18,12 +16,11 @@ const { title = 'Pagels Kindergarten' } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body class="bg-image">
 		<Header />
-		<!-- <HeaderOld /> -->
-		<!-- <HeaderOld2 /> -->
-		<!-- <HeaderOld25 /> -->
-		<!-- <HeaderOld3 /> -->
 		<slot />
+		<Footer />
+
+		<Lightbox />
 	</body>
 </html>

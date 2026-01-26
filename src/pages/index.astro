@@ -8,24 +8,15 @@ if (!homepage) {
 	throw new Error('Homepage content missing: src/content/homepage/homepage.yml');
 }
 
+const { Content } = await homepage.render();
+
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<h1>{homepage.data.headline}</h1>
-	<p>{homepage.data.intro}</p>
-	<img src={homepage.data.coverImage} alt="" class="cover-image"/>
-	<br>
-	<a href="/test">Zur Testseite</a>
-	<br>
-	<a href="/galerie">Zur Galerie</a>
+	<main>
+		<h1>{homepage.data.headline}</h1>
+		<Content />
+	</main>
 </Layout>
- 
-<style>
-	.cover-image {
-		max-width: 100%;
-		max-height: 400px;
-		margin-top: 20px;
-	}
-</style>

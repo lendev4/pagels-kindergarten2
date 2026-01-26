@@ -23,3 +23,46 @@ const albums = await getCollection("gallery")
         ))}
     </main>
 </Layout>
+
+<style>
+    .album {
+        margin-bottom: 3rem;
+    }
+
+    .album .description {
+        font-style: italic;
+        margin-bottom: 1rem;
+    }
+
+    .album div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .album img {
+        height: 200px;
+        width: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .album img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (min-width: 768px) {
+        .album img {
+            height: 220px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .album img {
+            height: 250px;
+        }
+    }
+</style>
