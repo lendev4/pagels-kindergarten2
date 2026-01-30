@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 const footerPages = await getCollection("legal");
 ---
 
-<footer>
+<footer class="elevated">
     <nav aria-label="Footer">
         <ul>
             {footerPages.map(page => (
@@ -19,8 +19,9 @@ const footerPages = await getCollection("legal");
 <style>
     footer {
         margin-top: auto;
-        background-color: var(--elevated);
-        border-top: 1px solid var(--border);
+        border-top: 2px solid var(--color-border);
+        border-bottom: none;
+        border-radius: 0;
         text-align: center;
         padding: 1rem;
         display: flex;
@@ -38,7 +39,7 @@ const footerPages = await getCollection("legal");
     ul {
         list-style: none;
         display: flex;
-        gap: 0.5rem 1rem;
+        gap: 0.3rem 1.2rem;
         padding: 0.5rem;
         margin: 0;
         flex-wrap: wrap;
@@ -47,8 +48,8 @@ const footerPages = await getCollection("legal");
 
     ul li a {
         text-decoration: none;
-        color: var(--secondary);
-        font-size: 1rem;
+        color: var(--color-text-light);
+        font-size: clamp(0.9rem, 2vw, 1rem);
         font-weight: 600;
         position: relative;
         padding: 0.25rem 0;
@@ -56,7 +57,7 @@ const footerPages = await getCollection("legal");
     }
 
     ul li a:hover {
-        color: var(--primary);
+        color: var(--color-primary-medium);
     }
 
     ul li a::after {
@@ -65,9 +66,9 @@ const footerPages = await getCollection("legal");
         bottom: -2px;
         left: 50%;
         width: 0;
-        height: 3px;
-        background: var(--accent);
-        border-radius: 4px;
+        height: 2px;
+        background: var(--color-hover-accent);
+        border-radius: 2px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         transform: translateX(-50%);
         opacity: 0.7;
@@ -78,8 +79,9 @@ const footerPages = await getCollection("legal");
     }
 
     .copyright {
-        color: var(--secondary);
-        font-size: 0.95rem;
+        color: var(--color-text-light);
+        font-size: 0.9rem;
         margin: 0;
+        font-weight: 500;
     }
 </style>

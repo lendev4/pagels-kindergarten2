@@ -2,31 +2,54 @@
 import { getCollection } from "astro:content"
 import Layout from "../layouts/Layout.astro"
 
-const albums = await getCollection("gallery")
+const albums = await getCollection("gallery").then((items) =>
+    items.sort((a, b) => {
+        const orderA = a.data.order ?? Infinity;
+        const orderB = b.data.order ?? Infinity;
+        return orderA - orderB;
+    })
+);
 ---
 
 <Layout title="Galerie">
-    <main>
-        <h1>Galerie</h1>
-        {albums.map((album) => (
-            <section class="album">
+    <section>
+        <div class="content header">
+            <h1>Galerie</h1>
+        </div>
+    </section>
+    {albums.map((album) => (
+        <section class={`album-section ${album.data.color}`}>
+            <div class="content album">
                 <h2>{album.data.title}</h2>
-
-                {album.data.description && <p class="description" >{album.data.description}</p>}
-
+                {album.data.description && (
+                    <p class="description">{album.data.description}</p>
+                )}
                 <div>
                     {album.data.images.map((image) => (
                         <img src={image} alt={album.data.title} loading="lazy" />
                     ))}
                 </div>
-            </section>
-        ))}
-    </main>
+            </div>
+        </section>
+    ))}
 </Layout>
 
 <style>
+    .album-section > .content {
+        padding-top: 0;
+        /* padding-bottom: 0 */;
+        padding-bottom: clamp(2rem, 4vw, 4rem);
+    }
+
+    /* .album-section:last-child > .content {
+    } */
+
+    .header {
+        padding-bottom: 0;
+    }
+
     .album {
-        margin-bottom: 3rem;
+        /* margin-bottom: 3rem; */
     }
 
     .album .description {

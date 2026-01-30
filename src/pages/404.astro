@@ -3,10 +3,12 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Seite nicht gefunden">
-	<section class="not-found">
-		<h1>Seite nicht gefunden</h1>
-		<p>Die Seite existiert nicht (mehr). Bitte nutze die Navigation oben.</p>
-		<a href="/">Zur Startseite</a>
+	<section>
+		<div class="content elevated not-found">
+			<h1>Seite nicht gefunden</h1>
+			<p>Die Seite existiert nicht (mehr). Bitte nutze die Navigation oben.</p>
+			<a href="/">Zur Startseite</a>
+		</div>
 	</section>
 </Layout>
 
@@ -14,28 +16,36 @@ import Layout from '../layouts/Layout.astro';
 	.not-found {
 		max-width: 600px;
 		margin: 2rem auto 4rem;
-		padding: 2rem;
-		background: #fff;
+		/* padding: 2rem; */
+		/* background: var(--color-secondary-light);
 		border-radius: 12px;
-		/* box-shadow: 0 6px 18px rgba(0,0,0,0.08); */
-		text-align: center;
+		box-shadow: 0 8px 20px rgba(30, 20, 15, 0.1); */
 	}
 
 	.not-found h1 {
 		margin-bottom: 0.5rem;
+		color: var(--color-primary-dark) !important;
+	}
+
+	.not-found p {
+		color: var(--color-text-light) !important;
 	}
 
 	.not-found a {
 		display: inline-block;
 		margin-top: 1rem;
-		padding: 0.5rem 1rem;
-		background: var(--secondary);
-		color: #fff;
+		padding: 0.75rem 1.5rem;
+		background: var(--color-text-light);
+		color: var(--color-primary-dark);
 		text-decoration: none;
 		border-radius: 999px;
+		position: relative;
+		z-index: 1;
 	}
 
 	.not-found a:hover {
-		background: color-mix(in srgb, var(--secondary) 80%, black);
+		background: var(--color-hover-accent);
+		color: var(--color-text-light);
+		box-shadow: 0 8px 20px rgba(230, 148, 90, 0.3);
 	}
 </style>

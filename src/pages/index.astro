@@ -9,32 +9,38 @@ if (!homepage) {
 }
 
 const { Content } = await homepage.render();
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<main>
-		<div class="hero">
-			<blockquote>
-				<p>{homepage.data.quote}</p>
-				<cite>{homepage.data.quote_author}</cite>
-			</blockquote>
-			{homepage.data.cover_image && <img src={homepage.data.cover_image} alt="Titelbild" />}
+	<section>
+		<div class="content">
+			<h1>{homepage.data.headline}</h1>
+			<div class="hero">
+				<blockquote>
+					<p>{homepage.data.quote}</p>
+					<cite>{homepage.data.quote_author}</cite>
+				</blockquote>
+				
+				{homepage.data.cover_image && <img class="cover_image" src={homepage.data.cover_image} alt="Titelbild" />}
+			</div>
 		</div>
-		<h1>{homepage.data.headline}</h1>
-		<Content />
-	</main>
+	</section>
+
+	<section class="blue">
+		<div class="content">
+			<Content />
+		</div>
+	</section>
 </Layout>
 
 <style>
 	.hero {
+		margin-top: clamp(1.5rem, 2vw, 2.5rem);
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		gap: 1.5rem;
+		gap: 2rem;
 		align-items: start;
-		margin-bottom: 1.5rem;
+		/* margin-bottom: 2rem; */
 	}
 	@media (min-width: 800px) {
 		.hero {
@@ -45,27 +51,27 @@ const { Content } = await homepage.render();
 		width: 100%;
 		max-height: 420px;
 		object-fit: cover;
-		border-radius: 14px;
-		box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+		margin: 0;
 	}
 	blockquote {
 		margin: 0;
-		padding: 1.2rem 1.4rem;
-		background: var(--elevated);
-		border-left: 5px solid var(--accent);
-		border-radius: 14px;
-		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-		color: var(--secondary);
+		margin-top: clamp(0.5rem, 1.5vw, 1rem);
+		padding: 0.5rem 1.5rem;
+		border-left: 2px solid var(--color-hover-accent);
+		color: var(--color-text-light);
 	}
 	blockquote p {
 		font-size: clamp(1.3rem, 1.8vw, 1.7rem);
 		font-family: "Antropos Freefont", serif;
-		line-height: 1.4;
+		line-height: 1.6;
 		margin: 0 0 0.5rem;
+		margin-bottom: 0.8rem;
 	}
 	blockquote cite {
 		font-style: normal;
-		font-weight: 600;
-		color: var(--secondary);
+		font-weight: 400;
+		color: var(--color-text-light);
+		display: block;
+		font-size: 0.95rem;
 	}
 </style>

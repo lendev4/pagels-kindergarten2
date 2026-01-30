@@ -15,7 +15,9 @@ const homepageCollection = defineCollection({
 const galleryCollection = defineCollection({
     schema: z.object({
         title: z.string(),
-        description: z.string().optional(),
+        description: z.string().optional().nullable(),
+        order: z.number().optional().nullable(),
+        color: z.string().optional().nullable(),
         images: z.array(z.string().min(1)),
     }),
 });
@@ -23,6 +25,7 @@ const galleryCollection = defineCollection({
 const pagesCollection = defineCollection({
     schema: z.object({
         title: z.string(),
+        nav_order: z.number().optional().nullable(),
         nav: z.boolean().optional(),
         nav_label: z.string().optional(),
         /* content: z.string(), */

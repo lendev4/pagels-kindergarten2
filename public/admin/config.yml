@@ -33,6 +33,8 @@ collections:
     fields:
       - { label: Titel, name: title, widget: string }
       - { label: Beschreibung, name: description, widget: text, required: false }
+      - { label: Reihenfolge, name: order, widget: number, required: false, hint: "Je kleiner die Zahl, desto weiter vorne" }
+      - { label: Farbe, name: color, widget: select, options: [{label: Rot, value: ""}, { label: Blau, value: blue }, { label: Grün, value: green }, { label: Lila, value: purple }], required: false }
       - { label: Bilder, name: images, widget: list, allow_add: true, required: false, field: { label: Bild, name: image, widget: image } }
         
   - name: "pages"
@@ -42,6 +44,8 @@ collections:
     fields:
       - { label: "In Navigationsleiste anzeigen", name: nav, widget: boolean, default: false, required: false }
       - { label: "Navigationslabel", name: nav_label, widget: string, required: false, hint: "Verwende Titel, falls leer" }
+      - { label: "Reihenfolge in der Navigation", name: nav_order, widget: number, required: false, hint: "Je kleiner die Zahl, desto weiter vorne" }
+      - { label: "Farbe", name: color, widget: select, options: [{label: Rot, value: ""}, { label: Blau, value: blue }, { label: Grün, value: green }, { label: Lila, value: purple }], required: false }
       - { label: Titel, name: title, widget: string }
       - { label: Inhalt, name: body, widget: markdown }
 

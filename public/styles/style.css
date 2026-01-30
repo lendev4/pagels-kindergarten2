@@ -1,12 +1,4 @@
 @font-face {
-  font-family: 'Lora-Variable';
-  src: url('../fonts/Lora-Variable.woff2') format('woff2');
-  font-weight: 400 700;
-  font-display: swap;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'Antropos Freefont';
   font-style: normal;
   font-weight: normal;
@@ -21,22 +13,35 @@
   src: url("/fonts/InterVariable.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: 'Averia Libre';
+  src: url('../fonts/AveriaLibre-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 /* Theme Variables */
 :root {
-  /* --bg: #c2330f; */
-  --bg: #b93636;
-  --elevated: #ffac3f;
-  /* --elevated: #fff4e6cc; */
-  /* --fg: #533428; */
-  --fg: #fcc4a9;
-  /* --secondary: #43201c; */
-  --secondary: #ffffff;
-  --primary: #9e463a;
-  --accent: #c57f63;
-  --border: rgba(0, 0, 0, 0.2);
+  /* Color Palette */
+  --color-primary-dark: #b93636;
+  --color-primary-medium: #9e463a;
+  --color-secondary-light: #ffac3f;
+  --color-accent: #c57f63;
+  --color-text: #fcc4a9;
+  --color-text-light: #ffffff;
+  
+  /* Utility Colors */
+  --color-border: rgba(255, 255, 255, 0.2);
+  --color-hover-text: #ffffff;
+  --color-hover-accent: #ffdaaa;
+  
+  /* Design Tokens */
   --radius: 12px;
   --shadow: 0 12px 30px rgba(30, 20, 15, 0.08);
-  --paper: url("/assets/paper.svg");
+  
+  /* Background Pattern */
+  --paper: url("/assets/paper.png");
+  --bg-size: 250px 250px;
 }
 
 *,
@@ -52,137 +57,154 @@ body {
   height: 100%;
   overflow: auto;
   font-family: 'InterVariable', sans-serif;
-  color: var(--fg);
-/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='600' y1='25' x2='600' y2='777'%3E%3Cstop offset='0' stop-color='%23ff0000'/%3E%3Cstop offset='1' stop-color='%23E0F'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='650' y1='25' x2='650' y2='777'%3E%3Cstop offset='0' stop-color='%23ff0019'/%3E%3Cstop offset='1' stop-color='%23ce00f3'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' gradientUnits='userSpaceOnUse' x1='700' y1='25' x2='700' y2='777'%3E%3Cstop offset='0' stop-color='%23ff0031'/%3E%3Cstop offset='1' stop-color='%23b000e6'/%3E%3C/linearGradient%3E%3ClinearGradient id='d' gradientUnits='userSpaceOnUse' x1='750' y1='25' x2='750' y2='777'%3E%3Cstop offset='0' stop-color='%23ff004a'/%3E%3Cstop offset='1' stop-color='%239400da'/%3E%3C/linearGradient%3E%3ClinearGradient id='e' gradientUnits='userSpaceOnUse' x1='800' y1='25' x2='800' y2='777'%3E%3Cstop offset='0' stop-color='%23ff0063'/%3E%3Cstop offset='1' stop-color='%237a00ce'/%3E%3C/linearGradient%3E%3ClinearGradient id='f' gradientUnits='userSpaceOnUse' x1='850' y1='25' x2='850' y2='777'%3E%3Cstop offset='0' stop-color='%23ff007c'/%3E%3Cstop offset='1' stop-color='%236200c1'/%3E%3C/linearGradient%3E%3ClinearGradient id='g' gradientUnits='userSpaceOnUse' x1='900' y1='25' x2='900' y2='777'%3E%3Cstop offset='0' stop-color='%23ff0094'/%3E%3Cstop offset='1' stop-color='%234d00b5'/%3E%3C/linearGradient%3E%3ClinearGradient id='h' gradientUnits='userSpaceOnUse' x1='950' y1='25' x2='950' y2='777'%3E%3Cstop offset='0' stop-color='%23ff00ad'/%3E%3Cstop offset='1' stop-color='%233900a8'/%3E%3C/linearGradient%3E%3ClinearGradient id='i' gradientUnits='userSpaceOnUse' x1='1000' y1='25' x2='1000' y2='777'%3E%3Cstop offset='0' stop-color='%23ff00c6'/%3E%3Cstop offset='1' stop-color='%2328009c'/%3E%3C/linearGradient%3E%3ClinearGradient id='j' gradientUnits='userSpaceOnUse' x1='1050' y1='25' x2='1050' y2='777'%3E%3Cstop offset='0' stop-color='%23ff00df'/%3E%3Cstop offset='1' stop-color='%23180090'/%3E%3C/linearGradient%3E%3ClinearGradient id='k' gradientUnits='userSpaceOnUse' x1='1100' y1='25' x2='1100' y2='777'%3E%3Cstop offset='0' stop-color='%23ff00f7'/%3E%3Cstop offset='1' stop-color='%230b0083'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' gradientUnits='userSpaceOnUse' x1='1150' y1='25' x2='1150' y2='777'%3E%3Cstop offset='0' stop-color='%23E0F'/%3E%3Cstop offset='1' stop-color='%23007'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg %3E%3Crect fill='url(%23a)' width='1200' height='800'/%3E%3Crect fill='url(%23b)' x='100' width='1100' height='800'/%3E%3Crect fill='url(%23c)' x='200' width='1000' height='800'/%3E%3Crect fill='url(%23d)' x='300' width='900' height='800'/%3E%3Crect fill='url(%23e)' x='400' width='800' height='800'/%3E%3Crect fill='url(%23f)' x='500' width='700' height='800'/%3E%3Crect fill='url(%23g)' x='600' width='600' height='800'/%3E%3Crect fill='url(%23h)' x='700' width='500' height='800'/%3E%3Crect fill='url(%23i)' x='800' width='400' height='800'/%3E%3Crect fill='url(%23j)' x='900' width='300' height='800'/%3E%3Crect fill='url(%23k)' x='1000' width='200' height='800'/%3E%3Crect fill='url(%23l)' x='1100' width='100' height='800'/%3E%3C/g%3E%3C/svg%3E");
-background-attachment: fixed;
-background-size: cover; */ 
-}
-
-.bg {
-  background-color: var(--bg);
-  background-image: var(--paper);
-  background-size: 600px 600px;
-  background-repeat: repeat;
-}
-
-.elevated {
-  background-color: var(--elevated);
-  background-image: var(--paper);
-  background-size: 600px 600px;
-  background-repeat: repeat;
-  box-shadow: var(--shadow);
-  border-radius: var(--radius);
-  padding: 1rem;
+  color: var(--color-text);
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  /* background-image: url("../src/assets/watercolor-blue.jpg");
-  background-size: cover; */
 }
 
-/* body.bg-image { */
-  /* background-image: url("https://waldorfkindergarten-giessen.de/typo3conf/ext/waldorfkindergarten_giessen/Resources/Public/Images/page.jpg"); */
-  /* background-size: cover;
-  background-attachment: fixed;
-  background-position: center; */
-
-  /* & main {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-  } */
-/* } */
+/* main > section {
+  background-color: var(--color-primary-dark);
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+} */
 
 main {
+  background-color: var(--color-primary-dark);
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  flex-grow: 1;
+}
+
+.content {
   padding: clamp(1rem, 2vw, 2rem);
-  max-width: 1000px;
+  padding-top: clamp(2.5rem, 4vw, 4.5rem);
+  padding-bottom: clamp(2rem, 4vw, 4rem);
+  max-width: 1250px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-
-  /* min-width: 320px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch; */
+  contain: layout style paint;
 }
 
-main > :first-child {
+/* main > :first-child {
   margin-top: 0;
 }
 
 main > :last-child {
   margin-bottom: 0;
-}
+} */
 
-main h1,
-main h2,
-main h3 {
-  font-family: 'Lora-Variable', serif;
-  color: var(--secondary);
+.content h1,
+.content h2,
+.content h3 {
+  font-family: 'Averia Libre', cursive;
+  color: var(--color-text-light);
   line-height: 1.2;
 }
 
-main h1 {
+.content h1 {
   font-size: clamp(1.9rem, 2.6vw, 2.8rem);
   margin: 0 0 1rem;
 }
 
-main h2 {
+.content h1::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 6px;
+  background: var(--color-hover-accent);
+  margin-top: 0.75rem;
+  border-radius: 3px;
+}
+
+.content h2 {
   font-size: clamp(1.4rem, 2vw, 2rem);
   margin: 2rem 0 0.75rem;
 }
 
-main h3 {
+.content h3 {
   font-size: clamp(1.2rem, 1.6vw, 1.6rem);
   margin: 1.5rem 0 0.5rem;
 }
 
-main p,
-main li {
+.content p,
+.content li {
   line-height: 1.7;
   font-size: 1.05rem;
 }
 
-main ul,
-main ol {
+.content ul,
+.content ol {
   padding-left: 1.25rem;
 }
 
-main a {
-  color: var(--secondary);
+.content a {
+  color: var(--color-text-light);
   font-weight: 600;
   text-decoration: none;
   border-bottom: 2px solid transparent;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-main a:hover {
-  color: var(--primary);
-  border-bottom-color: var(--accent);
+.content a:hover {
+  color: var(--color-hover-text);
+  border-bottom-color: var(--color-hover-accent);
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-main img {
+.content img {
   max-height: 420px;
-  display: block;
   border-radius: var(--radius);
-  margin: 1rem 0;
   cursor: pointer;
   box-shadow: var(--shadow);
+  max-width: 100%;
+  /* margin: 1rem 0; */
 }
 
-main a {
-  color: var(--secondary);
-  font-weight: 500;
+.bg {
+  background-color: var(--color-primary-dark);
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+}
+
+.elevated {
+  position: relative;
+  background-color: var(--color-secondary-light);
+  /* background-image: var(--paper); */
+  /* background-size: var(--bg-size); */
+  /* background-repeat: repeat; */
+  /* background-blend-mode: multiply; */
+  background-image: none;
+  background-blend-mode: normal;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+.elevated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  opacity: 0.7;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.blue {
+  background-color: rgb(51, 113, 194);
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
 }

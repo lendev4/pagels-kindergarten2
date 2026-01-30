@@ -16,11 +16,12 @@ const { title = 'Pagels Kindergarten' } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="bg-image bg">
+	<body>
 		<Header />
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<Footer />
-
 		<Lightbox />
 	</body>
 </html>
