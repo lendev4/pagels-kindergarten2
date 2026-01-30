@@ -3,6 +3,9 @@ import { defineCollection, z } from "astro:content";
 const homepageCollection = defineCollection({
     schema: z.object({
         headline: z.string(),
+        quote: z.string().optional(),
+        quote_author: z.string().optional(),
+        cover_image: z.string().optional(),
         /* intro: z.string(),
         coverImage: z.string().optional(), */
         /* title: z.string(), */

@@ -1,7 +1,8 @@
 ---
 headline: Willkommen Auf der Homepage des Pagels-Kindergartens
-coverImage: /uploads/kindergarten.jpg
-intro: Wir begleiten Kinder liebevoll und individuell auf ihrem Weg.
+quote: das kind in ehrfurcht empfangen, in liebe erziehen und in freiheit entlassen.
+quote_author: Rudolf Steiner
+cover_image: /uploads/kindergarten.jpg
 ---
 
 Waldorf Kindergarten in Leer

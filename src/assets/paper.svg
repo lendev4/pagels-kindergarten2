@@ -1,0 +1,89 @@
+<svg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'>
+  <defs>
+    <!-- Coarse grain for base texture -->
+    <filter id='baseGrain'>
+      <feTurbulence 
+        type='fractalNoise' 
+        baseFrequency='0.5' 
+        numOctaves='3' 
+        stitchTiles='stitch'/>
+      <feComponentTransfer>
+        <feFuncA type='linear' slope='0.15'/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Medium noise for random marks -->
+    <filter id='mediumNoise'>
+      <feTurbulence 
+        type='fractalNoise' 
+        baseFrequency='1.2' 
+        numOctaves='2' 
+        stitchTiles='stitch'/>
+      <feComponentTransfer>
+        <feFuncA type='linear' slope='0.08'/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Fine grain texture -->
+    <filter id='fineGrain'>
+      <feTurbulence 
+        type='fractalNoise' 
+        baseFrequency='3.5' 
+        numOctaves='2' 
+        stitchTiles='stitch'/>
+      <feComponentTransfer>
+        <feFuncA type='linear' slope='0.06'/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Distortion for organic wavy lines -->
+    <filter id='wavyLines'>
+      <feTurbulence 
+        type='fractalNoise' 
+        baseFrequency='0.03' 
+        numOctaves='3' 
+        stitchTiles='stitch'
+        result='noise'/>
+      <feDisplacementMap 
+        in='SourceGraphic' 
+        in2='noise' 
+        scale='4' 
+        xChannelSelector='R' 
+        yChannelSelector='G'/>
+    </filter>
+
+    <!-- Vertical lines pattern with variation -->
+    <pattern id='verticalLines' x='12' y='500' width='12' height='500' patternUnits='userSpaceOnUse'>
+      <line x1='1' y1='0' x2='1' y2='500' stroke='rgba(0,0,0,0.05)' stroke-width='0.6'/>
+      <line x1='3.5' y1='0' x2='3.5' y2='500' stroke='rgba(0,0,0,0.03)' stroke-width='0.4'/>
+      <line x1='6' y1='0' x2='6' y2='500' stroke='rgba(0,0,0,0.06)' stroke-width='0.5'/>
+      <line x1='8.5' y1='0' x2='8.5' y2='500' stroke='rgba(0,0,0,0.035)' stroke-width='0.4'/>
+      <line x1='11' y1='0' x2='11' y2='500' stroke='rgba(0,0,0,0.055)' stroke-width='0.5'/>
+    </pattern>
+
+    <!-- Horizontal lines pattern with variation -->
+    <pattern id='horizontalLines' x='500' y='16' width='500' height='16' patternUnits='userSpaceOnUse'>
+      <line x1='0' y1='1' x2='500' y2='1' stroke='rgba(0,0,0,0.04)' stroke-width='0.5'/>
+      <line x1='0' y1='3.5' x2='500' y2='3.5' stroke='rgba(0,0,0,0.025)' stroke-width='0.4'/>
+      <line x1='0' y1='6.5' x2='500' y2='6.5' stroke='rgba(0,0,0,0.055)' stroke-width='0.5'/>
+      <line x1='0' y1='9' x2='500' y2='9' stroke='rgba(0,0,0,0.03)' stroke-width='0.4'/>
+      <line x1='0' y1='12' x2='500' y2='12' stroke='rgba(0,0,0,0.05)' stroke-width='0.5'/>
+      <line x1='0' y1='14.5' x2='500' y2='14.5' stroke='rgba(0,0,0,0.035)' stroke-width='0.4'/>
+    </pattern>
+  </defs>
+  
+  <!-- Base coarse grain -->
+  <rect width='100%' height='100%' fill='rgba(0,0,0,0.12)' filter='url(#baseGrain)' opacity='0.7'/>
+  
+  <!-- Medium random texture (organic lines) -->
+  <rect width='100%' height='100%' fill='rgba(0,0,0,0.10)' filter='url(#mediumNoise)' opacity='0.8'/>
+  
+  <!-- Fine grain texture -->
+  <rect width='100%' height='100%' fill='rgba(0,0,0,0.08)' filter='url(#fineGrain)' opacity='0.9'/>
+  
+  <!-- Vertical lines -->
+  <rect width='100%' height='100%' fill='url(#verticalLines)' opacity='0.45' filter='url(#wavyLines)'/>
+  
+  <!-- Horizontal lines -->
+  <rect width='100%' height='100%' fill='url(#horizontalLines)' opacity='0.4' filter='url(#wavyLines)'/>
+</svg>

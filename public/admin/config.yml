@@ -18,6 +18,9 @@ collections:
         file: "src/content/homepage/homepage.md"
         fields:
         - { label: Überschrift, name: headline, widget: string }
+        - { label: Zitat, name: quote, widget: text, required: false }
+        - { label: Zitat Autor, name: quote_author, widget: string, required: false }
+        - { label: Titelbild, name: cover_image, widget: image, required: false }
         #  - { label: Einleitung, name: intro, widget: text }
         #  - { label: Titelbild, name: cover_image, widget: image, required: false }
         #- { label: Titel, name: title, widget: string }
