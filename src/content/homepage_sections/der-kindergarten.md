@@ -1,6 +1,6 @@
 ---
 section_title: Der Kindergarten
-order: 2
+order: 1
 color: blue
 image_on_left: true
 section_image: /uploads/bild11.jpg
