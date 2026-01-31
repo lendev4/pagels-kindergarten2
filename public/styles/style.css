@@ -183,7 +183,8 @@ main > :last-child {
   position: relative;
   color: var(--color-text-secondary);
   /* background-color: var(--color-secondary-light); */
-  background-image: linear-gradient(90deg, #ffd75f, #ffba5f);
+  /* background-image: linear-gradient(90deg, #ffd75f, #ffba5f); */
+  background-image: linear-gradient(90deg, #ffc258, #ffaa5f);
   /* background-image: var(--paper); */
   /* background-size: var(--bg-size); */
   /* background-repeat: repeat; */
@@ -233,7 +234,7 @@ main > :last-child {
 }
 
 .green {
-  background-color: rgb(99, 175, 91);
+  background-color: rgb(78, 143, 95);
   background-image: var(--paper);
   background-size: var(--bg-size);
   background-repeat: repeat;

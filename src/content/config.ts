@@ -38,15 +38,20 @@ const pagesCollection = defineCollection({
         nav_order: z.number().optional().nullable(),
         nav: z.boolean().optional(),
         nav_label: z.string().optional(),
-        color: z.string().optional().nullable(),
-        /* content: z.string(), */
+        /* color: z.string().optional().nullable(), */
+        sections: z.array(z.object({
+            section_title: z.string().optional().nullable(),
+            section_color: z.string().optional().nullable(),
+            reduced_padding_top: z.boolean().optional(),
+            reduced_padding_bottom: z.boolean().optional(),
+            section_body: z.string(),
+        })).optional(),
     }),
 });
 
 const legalCollection = defineCollection({
     schema: z.object({
         title: z.string(),
-        /* content: z.string(), */
     }),
 });
 

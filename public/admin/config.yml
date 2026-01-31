@@ -53,9 +53,20 @@ collections:
       - { label: "In Navigationsleiste anzeigen", name: nav, widget: boolean, default: false, required: false }
       - { label: "Navigationslabel", name: nav_label, widget: string, required: false, hint: "Verwende Titel, falls leer" }
       - { label: "Reihenfolge in der Navigation", name: nav_order, widget: number, required: false, hint: "Je kleiner die Zahl, desto weiter vorne" }
-      - { label: "Farbe", name: color, widget: select, options: [{label: Rot, value: ""}, { label: Blau, value: blue }, { label: Grün, value: green }, { label: Lila, value: purple }], required: false }
       - { label: Titel, name: title, widget: string }
-      - { label: Inhalt, name: body, widget: markdown }
+
+      - label: "Sektionen"
+        name: sections
+        widget: list
+        allow_add: true
+        fields:
+          - { label: "Sektionstitel", name: section_title, widget: string, required: false }
+          - { label: "Farbe", name: section_color, widget: select, options: [{label: Rot, value: ""}, { label: Blau, value: blue }, { label: Grün, value: green }, { label: Lila, value: purple }], required: false }
+          - { label: "Reduzierter Abstand Oben", name: reduced_padding_top, widget: boolean, required: false }
+          - { label: "Reduzierter Abstand Unten", name: reduced_padding_bottom, widget: boolean, required: false }
+          - { label: "Sektion Inhalt", name: section_body, widget: markdown }
+      #- { label: "Farbe", name: color, widget: select, options: [{label: Rot, value: ""}, { label: Blau, value: blue }, { label: Grün, value: green }, { label: Lila, value: purple }], required: false }
+      #- { label: Inhalt, name: body, widget: markdown }
 
   - name: "legal"
     label: "Rechtliches"

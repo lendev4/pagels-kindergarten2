@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import type { CollectionEntry } from "astro:content";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+
+const processor = await createMarkdownProcessor();
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
@@ -11,26 +13,37 @@ export async function getStaticPaths() {
   }));
 }
 
-type Props = {
-  page: CollectionEntry<"pages">;
-};
-
 const { page } = Astro.props;
-const { Content } = await page.render();
+
+const renderedSections = await Promise.all(
+  (page.data.sections || []).map(async (section) => ({
+    ...section,
+    html: (await processor.render(section.section_body)).code,
+  }))
+);
 ---
 
 <Layout title={page.data.title}>
-  <section class={page.data.color || ''}>
-    <div class="content">
-      <h1>{page.data.title}</h1>
-      <Content />
-    </div>
-  </section>
+  {renderedSections.map((section, index) => (
+    <section class={section.section_color || ''}>
+      <div class={`content${section.reduced_padding_top ? ' reduced-padding-top' : ''}${section.reduced_padding_bottom ? ' reduced-padding-bottom' : ''}`}>
+        {index === 0 && <h1>{page.data.title}</h1>}
+        {section.section_title && <h2>{section.section_title}</h2>}
+        <Fragment set:html={section.html} />
+      </div>
+    </section>
+  ))}
 </Layout>
 
 <style is:global>
   .content img {
     width: 100%;
     object-fit: cover;
+  }
+  .reduced-padding-top {
+    padding-top: 0;
+  }
+  .reduced-padding-bottom {
+    padding-bottom: 0;
   }
 </style>
