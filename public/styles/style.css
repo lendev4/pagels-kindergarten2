@@ -23,17 +23,20 @@
 /* Theme Variables */
 :root {
   /* Color Palette */
-  --color-primary-dark: #b93636;
-  --color-primary-medium: #9e463a;
-  --color-secondary-light: #ffac3f;
+  /* --color-primary-dark: #b93636; */
+  --color-primary-dark: #bc4444;
+  --color-primary-medium: #bb3c2b;
+  /* --color-secondary-light: #ffac3f; */
   --color-accent: #c57f63;
   --color-text: #fcc4a9;
   --color-text-light: #ffffff;
+  --color-text-secondary: #572e0a;
   
   /* Utility Colors */
   --color-border: rgba(255, 255, 255, 0.2);
   --color-hover-text: #ffffff;
   --color-hover-accent: #ffdaaa;
+  --color-hover-secondary: #ce4d3f;
   
   /* Design Tokens */
   --radius: 12px;
@@ -138,7 +141,7 @@ main > :last-child {
 .content p,
 .content li {
   line-height: 1.7;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
 
 .content ul,
@@ -150,7 +153,7 @@ main > :last-child {
   color: var(--color-text-light);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -178,12 +181,14 @@ main > :last-child {
 
 .elevated {
   position: relative;
-  background-color: var(--color-secondary-light);
+  color: var(--color-text-secondary);
+  /* background-color: var(--color-secondary-light); */
+  background-image: linear-gradient(90deg, #ffd75f, #ffba5f);
   /* background-image: var(--paper); */
   /* background-size: var(--bg-size); */
   /* background-repeat: repeat; */
   /* background-blend-mode: multiply; */
-  background-image: none;
+  /* background-image: none; */
   background-blend-mode: normal;
   box-shadow: var(--shadow);
   border-radius: var(--radius);
@@ -200,11 +205,53 @@ main > :last-child {
   mix-blend-mode: multiply;
   pointer-events: none;
 }
+.elevated li a {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+.elevated li a:hover {
+  border-bottom-color: var(--color-hover-secondary);
+}
+.elevated li a::after {
+  background: var(--color-hover-secondary);
+}
+.elevated h1::after {
+  background: var(--color-hover-secondary);
+}
 
 .blue {
-  background-color: rgb(51, 113, 194);
+  /* background-color: rgb(51, 113, 194); */
+  background-color: rgb(84, 120, 166);
   background-image: var(--paper);
   background-size: var(--bg-size);
   background-repeat: repeat;
   background-blend-mode: multiply;
+  color: var(--color-text-light);
+}
+.blue a:hover {
+  border-bottom-color: var(--color-text-light)
+}
+
+.green {
+  background-color: rgb(99, 175, 91);
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  color: var(--color-text-light);
+}
+.green a:hover {
+  border-bottom-color: var(--color-text-light)
+}
+
+.purple {
+  background-color: rgb(130, 90, 150);
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  color: var(--color-text-light);
+}
+.purple a:hover {
+  border-bottom-color: var(--color-text-light)
 }

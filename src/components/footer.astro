@@ -48,7 +48,7 @@ const footerPages = await getCollection("legal");
 
     ul li a {
         text-decoration: none;
-        color: var(--color-text-light);
+        /* color: var(--color-text-light); */
         font-size: clamp(0.9rem, 2vw, 1rem);
         font-weight: 600;
         position: relative;
@@ -67,11 +67,11 @@ const footerPages = await getCollection("legal");
         left: 50%;
         width: 0;
         height: 2px;
-        background: var(--color-hover-accent);
+        /* background: var(--color-hover-secondary); */
         border-radius: 2px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         transform: translateX(-50%);
-        opacity: 0.7;
+        /* opacity: 0.7; */
     }
 
     ul li a:hover::after {
@@ -79,7 +79,7 @@ const footerPages = await getCollection("legal");
     }
 
     .copyright {
-        color: var(--color-text-light);
+        font-weight: 500;
         font-size: 0.9rem;
         margin: 0;
         font-weight: 500;

@@ -11,7 +11,7 @@ public_folder: /uploads
 
 collections:
   - name: "homepage"
-    label: "Homepage"
+    label: "Startseite"
     files: 
       - label: "Startseite bearbeiten"
         name: "homepage"
@@ -21,10 +21,18 @@ collections:
         - { label: Zitat, name: quote, widget: text, required: false }
         - { label: Zitat Autor, name: quote_author, widget: string, required: false }
         - { label: Titelbild, name: cover_image, widget: image, required: false }
-        #  - { label: Einleitung, name: intro, widget: text }
-        #  - { label: Titelbild, name: cover_image, widget: image, required: false }
-        #- { label: Titel, name: title, widget: string }
-        - { label: Inhalt, name: body, widget: markdown }
+
+  - name: "homepage_sections"
+    label: "Startseite Sektionen"
+    folder: src/content/homepage_sections
+    create: true
+    fields:
+      - { label: Titel, name: section_title, widget: string }
+      - { label: Reihenfolge, name: order, widget: number, required: false, hint: "Je kleiner die Zahl, desto weiter vorne" }
+      - { label: Farbe, name: color, widget: select, options: [{label: Rot, value: ""}, { label: Blau, value: blue }, { label: Grün, value: green }, { label: Lila, value: purple }], required: false }
+      - { label: Bild links, name: image_on_left, widget: boolean, required: false }
+      - { label: Bild, name: section_image, widget: image, required: false }
+      - { label: Inhalt, name: body, widget: markdown }
 
   - name: "gallery"
     label: "Galerie"
@@ -56,4 +64,3 @@ collections:
     fields:
       - { label: Titel, name: title, widget: string }
       - { label: Inhalt, name: body, widget: markdown }
-    

@@ -12,6 +12,16 @@ const homepageCollection = defineCollection({
     }),
 });
 
+const homepageSectionsCollection = defineCollection({
+    schema: z.object({
+        section_title: z.string(),
+        order: z.number().optional().nullable(),
+        color: z.string().optional().nullable(),
+        image_on_left: z.boolean().optional(),
+        section_image: z.string().optional().nullable(),
+    }),
+});
+
 const galleryCollection = defineCollection({
     schema: z.object({
         title: z.string(),
@@ -28,6 +38,7 @@ const pagesCollection = defineCollection({
         nav_order: z.number().optional().nullable(),
         nav: z.boolean().optional(),
         nav_label: z.string().optional(),
+        color: z.string().optional().nullable(),
         /* content: z.string(), */
     }),
 });
@@ -41,6 +52,7 @@ const legalCollection = defineCollection({
 
 export const collections = {
     homepage: homepageCollection,
+    homepage_sections: homepageSectionsCollection,
     gallery: galleryCollection,
     pages: pagesCollection,
     legal: legalCollection,
