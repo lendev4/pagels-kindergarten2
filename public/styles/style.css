@@ -234,7 +234,7 @@ main > :last-child {
   border-bottom-color: var(--color-text-light)
 }
 
-/* @supports (background-blend-mode: multiply) {
+@supports (background-blend-mode: multiply) {
   main,
   .bg,
   .blue,
@@ -253,4 +253,4 @@ main > :last-child {
     background-size: var(--bg-size);
     background-repeat: repeat;
   }
-} */
+}
