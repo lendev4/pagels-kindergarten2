@@ -191,9 +191,13 @@ main > :last-child {
   content: '';
   position: absolute;
   inset: 0;
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
   opacity: 0.7;
   mix-blend-mode: multiply;
   pointer-events: none;
+  border-radius: inherit;
 }
 .elevated li a {
   color: var(--color-text-secondary);
@@ -234,23 +238,29 @@ main > :last-child {
   border-bottom-color: var(--color-text-light)
 }
 
-@supports (background-blend-mode: multiply) {
-  main,
-  .bg,
-  .blue,
-  .green,
-  .purple {
-    background-image: var(--paper);
-    background-size: var(--bg-size);
-    background-repeat: repeat;
-    background-blend-mode: multiply;
-  }
+/* Ensure texture compatibility by using pseudo-elements + mix-blend-mode 
+   instead of background-blend-mode, which is buggy on iOS Safari. */
+main,
+.bg,
+.blue,
+.green,
+.purple {
+  position: relative;
+  isolation: isolate; /* Create stacking context so ::before stays behind content */
 }
 
-@supports (mix-blend-mode: multiply) {
-  .elevated::before {
-    background-image: var(--paper);
-    background-size: var(--bg-size);
-    background-repeat: repeat;
-  }
+main::before,
+.bg::before,
+.blue::before,
+.green::before,
+.purple::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--paper);
+  background-size: var(--bg-size);
+  background-repeat: repeat;
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
