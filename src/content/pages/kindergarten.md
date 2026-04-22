@@ -9,11 +9,19 @@ sections:
     section_body: |-
       ![](/uploads/bild1.jpg)
 
-      Unsere Betreuungszeit beginnt morgens mit einer freien und kreativen Spielzeit im Gruppenraum. Die Kinder tauchen in ein fantasievolles Spiel mit den angebotenen Naturmaterialien ein. Die freilassenden wandelbaren Materialien werden zu individuellen Spielen genutzt: Mit Tüchern werden Höhlen gebaut, Bänder werden zu Ankern, Verbänden oder Schmuck, Holzklötze werden zu Türmen verbaut oder als Brötchen verkauft. Die Kinder können auch bei der Zubereitung des gemeinsamen vollwertigen Bio-Frühstücks helfen. Nach dem Aufräumen machen wir gemeinsam unseren jahreszeitlich passenden Reigen(Kreis- und Singspiel). Nach dem Frühstück beginnt dann die tägliche wetterunabhängige Spielzeit im Garten. Hier wird gern gebuddelt, gebaut, geklettert, balanciert und die Natur mit allen Sinnen entdeckt. Vor dem Mittagessen treffen wir uns noch einmal im Stuhlkreis um eine Geschichte zu hören, ein Spiel zu spielen oder ein Puppenspiel zu sehen. Besondere Höhepunkte sind unsere jahreszeitlichen Feste wie Fasching, Sommerfest, Michaelifest, Erntewoche, Laternelaufen, Adventsgärtlein und natürlich die Kindergeburtstage.
+      Unser Waldorfkindergarten befindet sich auf dem ehemaligen Gelände der schönen und bekannten Staudengärtnerei von Ernst Pagels, dem Namensgeber und „Gründungsvater“ unseres Kindergartens.
+
+      In unserem Kindergarten betreuen wir 25 Kinder im Alter von 3 Jahren bis zum Schuleintritt.
+
+      Unsere Betreuungszeit beginnt morgens mit einer freien und kreativen Spielzeit im Gruppenraum. Die Kinder tauchen in ein fantasievolles Spiel mit den angebotenen Naturmaterialien ein. Die freilassenden wandelbaren Materialien werden zu individuellen Spielen genutzt: Mit Tüchern werden Höhlen gebaut, Bänder werden zu Ankern, Verbänden oder Schmuck, Holzklötze werden zu Türmen verbaut oder als Brötchen verkauft. Die Kinder können auch bei der Zubereitung des gemeinsamen Frühstücks helfen oder sich den kreativen Tätigkeiten der Erwachsenen anschließen.
+
+      Nach dem Aufräumen machen wir gemeinsam unseren jahreszeitlich passenden Reigen (Kreis- und Singspiel). Nach dem Frühstück beginnt dann die tägliche wetterunabhängige Spielzeit im Garten. Hier wird gern gebuddelt, gebaut, geklettert, balanciert und die Natur mit allen Sinnen entdeckt.
+
+      Vor der ersten Abholzeit treffen wir uns noch einmal im Stuhlkreis um eine Geschichte zu hören, ein Spiel zu spielen oder ein Puppenspiel zu sehen.
 
       Einmal die Woche gibt es ein spezielles Kleingruppenangebot für Vorschulkinder.
 
-      In unserem Kindergarten betreuen wir 25 Kinder im Alter von 3 Jahren bis zum Schuleintritt. Unser Waldorfkindergarten befindet sich auf dem ehemaligen Gelände der schönen und bekannten Staudengärtnerei von Ernst Pagels, dem Namensgeber und „Gründungsvater“ unseres Kindergartens.
+      Besondere Höhepunkte sind unsere jahreszeitlichen Feste wie Fasching, Sommerfest, Michaelifest, Erntewoche, Laternelaufen, Adventsgärtlein und natürlich die Kindergeburtstage.
   - section_title: Öffnungszeiten
     section_color: blue
     section_body: |-
