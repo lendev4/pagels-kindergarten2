@@ -37,7 +37,7 @@ sections:
 
       Die Kinder können während der Freispielzeit bei der Zubereitung des Frühstücks helfen, zum Beispiel Obst und Gemüse schneiden, Teig kneten, Brötchen backen oder Brote schmieren. Unser Kindergartenessen ist ausschließlich vegetarisch.
 
-      Für das gemeinsame Frühstück zahlen die Eltern die anfallenden Kosten, im Moment sind das 13,50 im Monat.
+      Das Frühstück wird mit einem geringen Beitrag von den Familien selbst gezahlt. Bitte erfragen Sie gern den aktuellen Betrag.
 
       Ein Mittagssnack wird täglich um 12:45 Uhr angeboten und einzeln berechnet.
   - section_title: Eltern
@@ -45,7 +45,9 @@ sections:
     section_body: |-
       ![](/uploads/bild2.jpg)
 
-      Eingewöhnung Die Eltern haben die Möglichkeit, die Eingewöhnung ihrer Kinder nach Absprache zu begleiten. Wichtig hierbei ist uns der Austausch über individuelle Fragen und Bedürfnisse.
+      #### **Eingewöhnung** 
+
+      Die Eltern haben die Möglichkeit, die Eingewöhnung ihrer Kinder nach Absprache zu begleiten. Wichtig hierbei ist uns der Austausch über individuelle Fragen und Bedürfnisse.
 
       #### Elternmitarbeit
 
