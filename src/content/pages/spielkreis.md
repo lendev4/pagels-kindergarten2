@@ -8,13 +8,13 @@ sections:
     section_color: ''
     reduced_padding_bottom: true
     section_body: |-
-      Unser Spielkreis (kleine Krippengruppe/kleine Kindergruppe) richtet sich an Kinderzwischen 1,5 und 3 Jahren und unterteilt sich in zwei Gruppen:
+      Unser Spielkreis richtet sich an Kinder zwischen 1,5 und 3 Jahren und unterteilt sich in zwei Gruppen:
 
       Die Spielkreisgruppe trifft sich an zwei Tagen, dienstags und mittwochs, von 8:30 Uhr bis 11:30 Uhr in unserem Spielkreisraum.
 
       Die Eingewöhnungsgruppe trifft sich donnerstags von 8:30 Uhr bis 11:30 Uhr, ebenfalls im Spielkreisraum.
 
-      Beide Gruppen bieten Kindern unter 3 Jahren und ihren Eltern eine gute Möglichkeit, sich individuell und schrittweise an eine kleine Kindergruppe zu gewöhnen und im kleinen geschützten Rahmen soziale Kontakte zu knüpfen. Es ist auch möglich, an beiden Gruppen (drei Tage die Woche) teilzunehmen.
+      Beide Gruppen bieten Kindern unter 3 Jahren und ihren Eltern eine gute Möglichkeit, sich individuell und schrittweise an eine kleine Kindergruppe und eine erste Fremdbetreuung zu gewöhnen und im kleinen geschützten Rahmen soziale Kontakte zu knüpfen. Es ist auch möglich, an beiden Gruppen (drei Tage die Woche) teilzunehmen.
 
       In beiden Gruppen sind ca. 6 (maximal 8) Kinder.
 
@@ -33,10 +33,7 @@ sections:
     section_color: ''
     reduced_padding_top: true
     reduced_padding_bottom: false
-    section_body: |-
-      Die Spielkreisgruppe kostet 80 Euro im Monat plus 4 Euro Frühstücksgeld.
-
-      Die Eingewöhnungsgruppe kostet 40 Euro im Monat plus 2 Euro Frühstücksgeld.
+    section_body: Die aktuellen Kosten für die Spielkreisgruppe, Eingewöhnungsgruppe und Frühstücksgeld erfagen Sie gern bei uns.
 color: ''
 ---
 
