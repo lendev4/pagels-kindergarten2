@@ -57,9 +57,7 @@ sections:
     section_body: |-
       Unser Kindergarten befindet sich in der Stadt Leer und ist ein öffentlich geförderter Kindergarten. Deshalb ist er, wie alle anderen Kindergärten, beitragsfrei. Die Anmeldung für alle geförderten Kindergärten erfolgt über das Anmeldeportal des Landkreises Leer vom 1. Januar bis 28./29. Februar und ausschließlich für das direkt darauffolgende Kindergartenjahr (ab 1. August).
 
-      LINK?
-
-      Hier haben sie die Möglichkeit eine Erst-, Zweit- und Drittwahl anzugeben. Die Platzvergabe erfolgt (je nach freien Plätzen) durch die Kindergärten. Wenn Sie in Betracht ziehen, Ihr Kind bei uns betreuen zu lassen, vereinbaren Sie gern noch vor Ihrer Online-Anmeldung einen Termin zum Ansehen der Räumlichkeiten, zum gegenseitigen Kennenlernen und/oder zum Fragen beantworten.
+      Hier haben sie die Möglichkeit eine Erst-, Zweit- und Drittwahl anzugeben. Die Platzvergabe erfolgt nach einem vom Landkreis Leer vorgegebenen Punktesystem durch die Kindergärten. Wenn Sie in Betracht ziehen, Ihr Kind bei uns betreuen zu lassen, vereinbaren Sie gern noch vor Ihrer Online-Anmeldung einen Termin zu einem Infonachmittag. 
 
       ![](/uploads/bild4.jpg)
 color: ''
