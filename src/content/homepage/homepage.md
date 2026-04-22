@@ -1,6 +1,6 @@
 ---
 headline: Willkommen auf der Homepage des Pagels-Kindergartens
-quote: das kind in ehrfurcht empfangen, in liebe erziehen und in freiheit entlassen.
+quote: Das Kind in Ehrfurcht empfangen, in Liebe erziehen und in Freiheit entlassen.
 quote_author: Rudolf Steiner
 cover_image: /uploads/kindergarten.jpg
 ---
