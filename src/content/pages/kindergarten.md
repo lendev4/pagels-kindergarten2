@@ -27,21 +27,19 @@ sections:
     section_body: |-
       Die Betreuungszeit unseres Kindergarten beginnt um **7:30 Uhr** und endet spätestens um **13:30 Uhr**.
 
-      Die Schließzeiten betragen insgesamt 33 Tage und liegen grundsätzlich innerhalb der niedersächsischen Schulferien. Aktuelle Ferienzeiten finden sich unter „Schließzeiten“.
+      Die Schließzeiten betragen insgesamt 35 Tage und liegen grundsätzlich innerhalb der niedersächsischen Schulferien. Aktuelle Ferienzeiten finden sich unter „Schließzeiten“.
   - section_title: Essen
     section_color: purple
     section_body: |-
       ![](/uploads/essen.jpg)
 
-      Bei uns wird das Frühstück jeden Tag frisch aus Biozutaten zubereitet. Unser Kindergartenessen ist ausschließlich vegetarisch.
+      Bei uns wird das Frühstück jeden Tag frisch aus Biozutaten zubereitet. 
 
-      Ein wichtiger Aspekt der Waldorfpädagogik ist, dass die Kinder den Wochenlauf durch die wochentagspezifischen Gerichte intuitiv verinnerlichen. So ist es nicht erstaunlich, dass die Kinder beispielsweise fragen, wenn die Eltern sagen, dass sie sich am Mittwoch verabreden können: „Ist das der Hirsebreitag?“
-
-      Die Kinder können während der Freispielzeit auch bei der Zubereitung des Frühstücks helfen, zum Beispiel Obst oder Gemüse schneiden, Teig kneten, Brötchen backen oder Brote schmieren.
+      Die Kinder können während der Freispielzeit bei der Zubereitung des Frühstücks helfen, zum Beispiel Obst und Gemüse schneiden, Teig kneten, Brötchen backen oder Brote schmieren. Unser Kindergartenessen ist ausschließlich vegetarisch.
 
       Für das gemeinsame Frühstück zahlen die Eltern die anfallenden Kosten, im Moment sind das 13,50 im Monat.
 
-      Ein vegetarisches Mittagessen wird täglich um 12:45 Uhr angeboten und einzeln berechnet.
+      Ein Mittagssnack wird täglich um 12:45 Uhr angeboten und einzeln berechnet.
   - section_title: Eltern
     section_color: ''
     section_body: |-
