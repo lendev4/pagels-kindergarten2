@@ -4,7 +4,7 @@ nav_label: ''
 nav_order: 1
 title: Kindergarten
 sections:
-  - section_title: 'Über uns - Praxis:'
+  - section_title: Über uns
     section_color: ''
     section_body: |-
       ![](/uploads/bild1.jpg)
