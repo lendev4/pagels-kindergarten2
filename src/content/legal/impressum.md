@@ -20,8 +20,8 @@ E-Mail: mail@pagels-kindergarten.de
 Der Verein wird vertreten durch den vertretungsberechtigten Vorstand:
 
 - Sabrina von Nuis
-- Elke Möckel
-- Jörg Hemken
+- Ingo Willms
+- Manuela Röhrs
 
 ## Registereintrag
 
