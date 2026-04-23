@@ -27,7 +27,7 @@ sections:
     section_body: |-
       Die Betreuungszeit unseres Kindergarten beginnt um **7:30 Uhr** und endet spätestens um **13:30 Uhr**.
 
-      Die Schließzeiten betragen insgesamt 35 Tage und liegen grundsätzlich innerhalb der niedersächsischen Schulferien. Aktuelle Ferienzeiten finden sich unter „Schließzeiten“.
+      Die Schließzeiten betragen insgesamt 35 Tage und liegen grundsätzlich innerhalb der niedersächsischen Schulferien.
   - section_title: Essen
     section_color: purple
     section_body: |-
