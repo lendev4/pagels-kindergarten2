@@ -2,7 +2,7 @@
 section_title: Der Spielkreis
 order: 2
 color: purple
-section_image: /uploads/bild1.jpg
+section_image: /uploads/3bdlHb.jpg
 ---
 
 Unser Spielkreis bietet den Jüngsten einen sanften Einstieg in die Gemeinschaft. An ein bis drei Tagen in der Woche erleben Kinder im Alter von 1,5 bis 3 Jahren eine warme, ruhige Atmosphäre.
