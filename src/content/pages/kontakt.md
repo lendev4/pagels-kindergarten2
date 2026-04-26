@@ -15,7 +15,9 @@ sections:
 
       Tel. 0491-9922143 (AB)
 
-      @ mail@pagels-kindergarten.de
+      mail@pagels-kindergarten.de
+
+      ![](/uploads/bild4.jpg)
 color: ''
 ---
 
