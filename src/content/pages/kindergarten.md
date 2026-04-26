@@ -28,6 +28,8 @@ sections:
       Die Betreuungszeit unseres Kindergarten beginnt um **7:30 Uhr** und endet spätestens um **13:30 Uhr**.
 
       Die Schließzeiten betragen insgesamt 35 Tage und liegen grundsätzlich innerhalb der niedersächsischen Schulferien.
+
+      ![](/uploads/IMG_9622.jpg)
   - section_title: Essen
     section_color: purple
     section_body: |-
@@ -40,6 +42,8 @@ sections:
       Das Frühstück wird mit einem geringen Beitrag von den Familien selbst gezahlt. Bitte erfragen Sie gern den aktuellen Betrag.
 
       Ein Mittagssnack wird täglich um 12:45 Uhr angeboten und einzeln berechnet.
+
+      ![](/uploads/IMG_9626.jpg)
   - section_title: Eltern
     section_color: ''
     section_body: |-
@@ -52,6 +56,8 @@ sections:
       #### Elternmitarbeit
 
       Da wir ein Kindergarten in Elternvereinsträgerschaft sind, besteht die Notwendigkeit diesen Verein aufrecht zu erhalten, um den Kindergarten zu tragen. Die Eltern können dies mit ihrem Vereinsbeitritt unterstützen und so dessen Zukunft gewährleisten. Weiterhin bringen sich die Eltern durch Mitarbeit in unseren Arbeitskreisen (Festkreis, Haus- und Gartenkreis und andere) oder in die Vorstandsarbeit ein.
+
+      ![](/uploads/A0ZQUW.jpeg)
   - section_title: Anmeldung
     section_color: green
     section_body: |-
