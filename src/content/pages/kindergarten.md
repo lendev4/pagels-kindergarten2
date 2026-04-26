@@ -15,7 +15,11 @@ sections:
 
       Unsere Betreuungszeit beginnt morgens mit einer freien und kreativen Spielzeit im Gruppenraum. Die Kinder tauchen in ein fantasievolles Spiel mit den angebotenen Naturmaterialien ein. Die freilassenden wandelbaren Materialien werden zu individuellen Spielen genutzt: Mit Tüchern werden Höhlen gebaut, Bänder werden zu Ankern, Verbänden oder Schmuck, Holzklötze werden zu Türmen verbaut oder als Brötchen verkauft. Die Kinder können auch bei der Zubereitung des gemeinsamen Frühstücks helfen oder sich den kreativen Tätigkeiten der Erwachsenen anschließen.
 
+      ![](/uploads/GnPkHW.jpeg)
+
       Nach dem Aufräumen machen wir gemeinsam unseren jahreszeitlich passenden Reigen (Kreis- und Singspiel). Nach dem Frühstück beginnt dann die tägliche wetterunabhängige Spielzeit im Garten. Hier wird gern gebuddelt, gebaut, geklettert, balanciert und die Natur mit allen Sinnen entdeckt.
+
+      ![](/uploads/hDNCEy.jpeg)
 
       Vor der ersten Abholzeit treffen wir uns noch einmal im Stuhlkreis um eine Geschichte zu hören, ein Spiel zu spielen oder ein Puppenspiel zu sehen.
 
@@ -62,8 +66,6 @@ sections:
     section_color: green
     section_body: |-
       Unser Kindergarten befindet sich in der Stadt Leer und ist ein öffentlich geförderter Kindergarten. Deshalb ist er, wie alle anderen Kindergärten, beitragsfrei. Die Anmeldung für alle geförderten Kindergärten erfolgt über das Anmeldeportal des Landkreises Leer vom 1. Januar bis 28./29. Februar und ausschließlich für das direkt darauffolgende Kindergartenjahr (ab 1. August).
-
-      [https://www.landkreis-leer.de/Aktuelles/Kita-Anmeldung/](https://www.landkreis-leer.de/Aktuelles/Kita-Anmeldung/)
 
       Hier haben sie die Möglichkeit eine Erst-, Zweit- und Drittwahl anzugeben. Die Platzvergabe erfolgt nach einem vom Landkreis Leer vorgegebenen Punktesystem durch die Kindergärten. Wenn Sie in Betracht ziehen, Ihr Kind bei uns betreuen zu lassen, vereinbaren Sie gern noch vor Ihrer Online-Anmeldung einen Termin zu einem Infonachmittag. 
 
