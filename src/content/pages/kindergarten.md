@@ -53,7 +53,7 @@ sections:
     section_body: |-
       ![](/uploads/bild2.jpg)
 
-      #### **Eingewöhnung** 
+      #### Eingewöhnung 
 
       Die Eltern haben die Möglichkeit, die Eingewöhnung ihrer Kinder nach Absprache zu begleiten. Wichtig hierbei ist uns der Austausch über individuelle Fragen und Bedürfnisse.
 
