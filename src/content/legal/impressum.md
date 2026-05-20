@@ -4,25 +4,23 @@ title: Impressum
 
 ## Angaben gemäß § 5 TMG
 
-**Verein zur Förderung der Waldorfpädagogik Leer/Ostfriesland e.V.**
-(Träger des Pagels Kindergartens)
+**Pagels Kindergarten**
+(Verein zur Förderung der Waldorfpädagogik Leer/Ostfriesland e.V.)
 
 Deichstraße 2
 26789 Leer
 Deutschland
 
 Telefon: 0491 / 99 22 143
-Fax: 0491 / 45 44 205
 E-Mail: mail@pagels-kindergarten.de
 
-## Vertretungsberechtigter Vorstand
+## Vertretungsberechtigung
+
+Der Verein wird vertreten durch den vertretungsberechtigten Vorstand:
 
 - Sabrina von Nuis
 - Ingo Willms
 - Manuela Röhrs
-
-Der Verein wird durch den Vorstand im Sinne des § 26 BGB vertreten.
-Jeweils zwei Vorstandsmitglieder vertreten den Verein gemeinsam.
 
 ## Registereintrag
 
@@ -32,7 +30,7 @@ Registernummer: VR 110725
 
 ## Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
 
-Sabrina von Nuis
+Pagels Kindergarten
 Deichstraße 2
 26789 Leer
 
@@ -44,7 +42,11 @@ Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf
 diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10
 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder
 gespeicherte fremde Informationen zu überwachen oder nach Umständen zu
-forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.
+forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+
+Eine Haftung für Schäden, die aus der Nutzung der bereitgestellten
+Informationen entstehen, ist ausgeschlossen, sofern kein vorsätzliches oder
+grob fahrlässiges Verschulden vorliegt.
 
 ### Haftung für Links
 
@@ -54,7 +56,7 @@ Zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar.
 
 ## Urheberrecht
 
-Die durch den Verein erstellten Inhalte und Werke auf dieser
+Die durch den Pagels Kindergarten erstellten Inhalte und Werke auf dieser
 Webseite unterliegen dem deutschen Urheberrecht. Die Vervielfältigung,
 Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des
 Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw.
