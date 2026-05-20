@@ -24,6 +24,5 @@ images:
   - /uploads/UNADJUSTEDNONRAW_thumb_7cc.jpg
   - /uploads/UNADJUSTEDNONRAW_thumb_8ec.jpg
   - /uploads/UNADJUSTEDNONRAW_thumb_8f6.jpg
-  - /uploads/bild1.jpg
   - /uploads/UNADJUSTEDNONRAW_thumb_801.jpg
 ---
