@@ -7,9 +7,6 @@ images:
   - /uploads/kindergarten.jpg
   - /uploads/bild1.jpg
   - /uploads/bild3.jpg
-  - /uploads/bild11.jpg
-  - /uploads/bild4.jpg
-  - /uploads/essen.jpg
   - /uploads/GnPkHW.jpeg
   - /uploads/hDNCEy.jpeg
   - /uploads/IfW1d5.jpeg
