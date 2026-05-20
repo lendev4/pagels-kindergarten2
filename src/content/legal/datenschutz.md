@@ -16,7 +16,7 @@ Telefon: 0491 / 99 22 143
 E-Mail: mail@pagels-kindergarten.de
 
 Vertretungsberechtigter Vereinsvorstand:
-Sabrina von Nuis, Elke Möckel, Jörg Hemken
+Sabrina von Nuis, Ingo Willms, Manuela Röhrs
 
 Vereinsregister: Amtsgericht Aurich, VR 110725
 
