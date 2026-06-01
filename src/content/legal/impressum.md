@@ -8,7 +8,11 @@ title: Impressum
 (Verein zur Förderung der Waldorfpädagogik Leer/Ostfriesland e.V.)
 
 Deichstraße 2
+
+
 26789 Leer
+
+
 Deutschland
 
 Telefon: 0491 / 99 22 143
