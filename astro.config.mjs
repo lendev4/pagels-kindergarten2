@@ -3,6 +3,5 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://lendev4.github.io/pagels-kindergarten2/',
-  base: 'pagels-kindergarten2',
+  site: 'https://pagels-kindergarten.de'
 });
