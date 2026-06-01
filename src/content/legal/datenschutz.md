@@ -13,6 +13,7 @@ Deichstraße 2
 26789 Leer
 
 Telefon: 0491 / 99 22 143
+
 E-Mail: mail@pagels-kindergarten.de
 
 Vertretungsberechtigter Vereinsvorstand:
